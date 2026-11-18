@@ -19,4 +19,22 @@ describe("public PDFs", () => {
       });
     }
   }
+
+  const squash = (t: string) => t.replace(/\s+/g, "");
+
+  for (const kind of ["designed", "ats"] as const) {
+    it(`EN ${kind} shows the first four CIAL bullets only`, async () => {
+      const { text } = await pdfText(`public${cvPdfPath("en", kind)}`);
+      expect(squash(text)).toContain("CIAL360TaskHub");
+      expect(squash(text)).toContain("Pulso");
+      expect(squash(text)).not.toContain("SATAuthFlow");
+      expect(text).not.toMatch(/\b(back|front)[ -]end\b/i);
+    });
+  }
+
+  it("EN ATS has the title and skill years", async () => {
+    const { text } = await pdfText(`public${cvPdfPath("en", "ats")}`);
+    expect(text).toContain("Senior Software Engineer");
+    expect(squash(text)).toContain("React(13yrs)");
+  });
 });

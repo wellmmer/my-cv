@@ -12,6 +12,7 @@
 
 .page {
   --ink: #111111;
+  --edge: #111111;
   font-family: var(--font-rubik), Arial, sans-serif;
   font-weight: 500;
   font-size: 9pt;
@@ -60,17 +61,16 @@
 }
 
 .block {
-  margin-top: 3.4mm;
+  margin-top: 2.6mm;
 }
 
 .block h2 {
   font-size: 10.5pt;
   font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: -0.01em;
   padding-bottom: 1mm;
   border-bottom: 2px solid var(--edge);
-  margin-bottom: 1.5mm;
+  margin-bottom: 1.2mm;
 }
 
 .note {
@@ -84,8 +84,17 @@
   display: grid;
   grid-template-columns: 16mm 1fr;
   gap: 4mm;
-  margin-top: 1.8mm;
+  margin-top: 1.5mm;
+}
+
+/* A job may continue on the next page, but never split a bullet or leave its title alone. */
+.job li {
   break-inside: avoid;
+}
+
+.job h3,
+.job .meta {
+  break-after: avoid;
 }
 
 .job .rail {
@@ -109,6 +118,27 @@
 
 .meta {
   font-size: 8.4pt;
+  margin-top: 0.5mm;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0 1.6mm 0.2mm;
+  border: 1.2px solid #111;
+  border-radius: 1.4mm;
+  font-weight: 700;
+  color: #fff;
+}
+
+.b_red { background: var(--red); }
+.b_blue { background: var(--blue); }
+.b_black { background: var(--black); }
+.b_green { background: var(--green); }
+.b_yellow { background: var(--yellow); color: #111; }
+.b_grey { background: var(--grey); color: #111; }
+
+.job li b {
+  font-weight: 900;
 }
 
 .job ul {
@@ -125,17 +155,21 @@
 }
 
 .project {
-  font-size: 8.8pt;
-  margin-top: 1mm;
+  font-size: 8.6pt;
+  margin-top: 0.6mm;
 }
 
 .cols {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 5mm;
+  grid-template-columns: 1.5fr 1.1fr 1.3fr;
+  gap: 4mm;
   break-inside: avoid;
 }
 
 .gap {
   margin-top: 2.5mm;
+}
+
+.cols .small {
+  font-size: 8.2pt;
 }

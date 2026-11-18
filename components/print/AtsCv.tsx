@@ -15,7 +15,7 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
   return (
     <main className={styles.page}>
       <h1>{cv.name}</h1>
-      <p className={styles.title}>{t.metaTitle.split(", ")[1]}</p>
+      <p className={styles.title}>{t.title}</p>
       <p className={styles.contact}>
         <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> | {CONTACT.phone} |{" "}
         <a href={CONTACT.linkedin}>linkedin.com/in/wellmmer</a> | <a href={CONTACT.github}>github.com/wellmmer</a> |{" "}
@@ -34,6 +34,7 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
           </h3>
           <p className={styles.meta}>
             {formatRange(s.start, s.end, locale)} | {s.city[locale]}
+            {s.via ? ` | ${t.via} ${s.via}` : ""}
           </p>
           <ul>
             {pdfBulletsOf(s, locale).map((b) => (
@@ -64,7 +65,10 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
       <h2>{t.atsSections.skills}</h2>
       {m.skills.map((g) => (
         <p key={g.group}>
-          {t.groups[g.group]}: {g.items.map((i) => i.label).join(", ")}
+          {t.groups[g.group]}:{" "}
+          {g.items
+            .map((i) => (i.years === null ? i.label : `${i.label} (${i.years} ${t.years[i.years === 1 ? 0 : 1]})`))
+            .join(", ")}
         </p>
       ))}
 

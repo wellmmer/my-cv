@@ -10,6 +10,9 @@ import { SITE_URL } from "@/lib/site";
 import { companyLine, printModel } from "@/components/print/model";
 import styles from "@/components/print/designed.module.css";
 
+/** Print keeps project lines short: the first sentence only. */
+const firstSentence = (x: string) => x.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? x;
+
 /** The build-manual CV: one text column, a brick per step in the left rail. */
 export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; privateSteps: Step[]; today: Date }) {
   const t = ui[locale];
@@ -22,7 +25,7 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
         </div>
         <div>
           <h1>{cv.name}</h1>
-          <p className={styles.title}>{t.metaTitle.split(", ")[1]}</p>
+          <p className={styles.title}>{t.title}</p>
           <p className={styles.contact}>
             <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
             <span>{CONTACT.phone}</span>
@@ -52,8 +55,9 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
                 {s.role[locale]}, {companyLine(s)}
               </h3>
               <p className={styles.meta}>
-                {formatRange(s.start, s.end, locale)} · {formatDuration(inclusiveMonths(s.start, s.end, today), locale)} ·{" "}
-                {s.city[locale]}
+                <span className={`${styles.badge} ${styles[`b_${s.brick}`]}`}>{formatRange(s.start, s.end, locale)}</span>{" "}
+                {formatDuration(inclusiveMonths(s.start, s.end, today), locale)} · {s.city[locale]}
+                {s.via ? ` · ${t.via} ${s.via}` : ""}
               </p>
               <ul>
                 {pdfBulletsOf(s, locale).map((b) => {
@@ -75,7 +79,7 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
         <h2>{t.atsSections.projects}</h2>
         {cv.projects.map((p) => (
           <p key={p.id} className={styles.project}>
-            <b>{p.name}</b>: {p.what[locale]} {p.role[locale]}
+            <b>{p.name}</b>: {firstSentence(p.what[locale])}
             {p.live ? (
               <>
                 {" "}
@@ -90,7 +94,12 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
         <h2>{t.atsSections.skills}</h2>
         {m.skills.map((g) => (
           <p key={g.group} className={styles.small}>
-            <b>{t.groups[g.group]}:</b> {g.items.map((i) => i.label).join(", ")}
+            <b>{t.groups[g.group]}:</b>{" "}
+            {g.items
+              .map((i, k) =>
+                i.years === null || k >= 6 ? i.label : `${i.label} (${i.years} ${t.years[i.years === 1 ? 0 : 1]})`,
+              )
+              .join(", ")}
           </p>
         ))}
       </section>
@@ -106,11 +115,7 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
         </div>
         <div>
           <h2>{t.atsSections.certifications}</h2>
-          {cv.certifications[locale].map((c) => (
-            <p key={c} className={styles.small}>
-              {c}
-            </p>
-          ))}
+          <p className={styles.small}>{cv.certifications[locale].join(" · ")}</p>
         </div>
         <div>
           <h2>{t.atsSections.languages}</h2>
