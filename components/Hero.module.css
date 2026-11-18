@@ -1,0 +1,201 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(300px, 440px) minmax(0, 1fr) minmax(260px, 360px);
+  grid-template-areas:
+    "copy build box"
+    "strip strip strip";
+  grid-template-rows: 1fr auto;
+  column-gap: 32px;
+  row-gap: 18px;
+  max-width: var(--max);
+  min-height: calc(100svh - 72px);
+  margin: 0 auto;
+  padding: 12px var(--gutter) 20px;
+}
+
+.copy {
+  grid-area: copy;
+  align-self: center;
+}
+
+.name {
+  font-size: clamp(52px, 6vw, 78px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.name span {
+  display: block;
+}
+
+.summary {
+  margin-top: 22px;
+  font-size: clamp(18px, 1.5vw, 21px);
+  line-height: 1.4;
+  max-width: 34ch;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.plain {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 15px;
+  text-underline-offset: 4px;
+}
+
+.note {
+  margin-top: 18px;
+  max-width: 44ch;
+  font-size: 15px;
+  line-height: 1.45;
+  padding-left: 12px;
+  border-left: 4px solid var(--red);
+}
+
+.build {
+  grid-area: build;
+  position: relative;
+  align-self: end;
+  justify-self: center;
+  width: 100%;
+  max-width: 420px;
+  padding-top: clamp(84px, 8vw, 116px);
+}
+
+.numeral {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  font-size: clamp(104px, 11vw, 180px);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  pointer-events: none;
+}
+
+.tower {
+  position: relative;
+}
+
+.box {
+  grid-area: box;
+  align-self: center;
+  position: relative;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  padding: 20px 22px 44px;
+}
+
+.box h2 {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.box ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+  gap: 18px 12px;
+  margin-top: 18px;
+}
+
+.box li {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.box li svg {
+  flex: none;
+}
+
+.box b {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.scale {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.strip {
+  grid-area: strip;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(76px, 1fr));
+  gap: 8px;
+  list-style: none;
+  overflow-x: auto;
+  padding: 4px 2px 6px;
+}
+
+.strip a {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--soft);
+  text-decoration: none;
+  border: 3px solid transparent;
+}
+
+.strip a:hover {
+  border-color: var(--ink);
+}
+
+.strip b {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.strip span {
+  font-size: 13px;
+}
+
+.on a {
+  background: var(--card);
+  border-color: var(--ink);
+}
+
+@media (max-width: 1180px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    grid-template-areas:
+      "copy copy"
+      "build box"
+      "strip strip";
+    grid-template-rows: auto;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "build"
+      "box"
+      "strip";
+    padding-top: 20px;
+  }
+  .build {
+    max-width: 400px;
+  }
+}

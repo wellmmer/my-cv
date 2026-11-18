@@ -75,6 +75,16 @@ describe("content", () => {
     }
   });
 
+  it("keeps tower labels short", () => {
+    for (const s of cv.steps) expect((s.short ?? s.company).length, s.id).toBeLessThanOrEqual(12);
+  });
+
+  it("names the key parts of the newest step for the first screen", () => {
+    const newest = cv.steps[cv.steps.length - 1];
+    expect(newest.keyParts?.length).toBe(6);
+    for (const id of newest.keyParts ?? []) expect(newest.uses).toContain(id);
+  });
+
   it("has no empty strings in any language", () => {
     for (const text of copy()) expect(text.trim().length).toBeGreaterThan(0);
   });

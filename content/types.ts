@@ -23,6 +23,8 @@ export interface Step {
   n: number;
   id: string;
   company: string;
+  /** Tower label when the company name is long. */
+  short?: string;
   companyUrl?: string;
   /** Product built at this step, e.g. Finove. */
   product?: string;
@@ -35,6 +37,8 @@ export interface Step {
   brick: BrickColor;
   bullets: L<string[]>;
   uses: SkillId[];
+  /** Up to six parts shown in the first-screen parts box (newest step only). */
+  keyParts?: SkillId[];
   note?: L;
 }
 

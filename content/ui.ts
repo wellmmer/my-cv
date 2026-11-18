@@ -23,6 +23,8 @@ export interface Ui {
   newParts: string;
   /** `{n}` is the step number. */
   newPartsInStep: string;
+  /** `{n}` is the step number. */
+  partsInStep: string;
   step: string;
   client: string;
   years: [string, string];
@@ -71,6 +73,7 @@ export const ui: L<Ui> = {
       "Contract-ready. I invoice through my own Brazilian company, ChimpCode: since 2018, and for companies abroad since 2022. B2B contract, no employer of record needed. Also on Deel.",
     newParts: "New parts",
     newPartsInStep: "New parts in step {n}",
+    partsInStep: "Parts in step {n}",
     step: "Step",
     client: "Client",
     years: ["yr", "yrs"],
@@ -117,6 +120,7 @@ export const ui: L<Ui> = {
       "Pronto para contrato. Emito nota fiscal pela minha empresa no Brasil, a ChimpCode: desde 2018, e para empresas do exterior desde 2022. Contrato B2B, sem necessidade de employer of record. Também trabalho via Deel.",
     newParts: "Peças novas",
     newPartsInStep: "Peças novas na etapa {n}",
+    partsInStep: "Peças da etapa {n}",
     step: "Etapa",
     client: "Cliente",
     years: ["ano", "anos"],
@@ -163,6 +167,7 @@ export const ui: L<Ui> = {
       "Listo para contratar. Facturo a través de mi propia empresa en Brasil, ChimpCode: desde 2018, y a empresas del exterior desde 2022. Contrato B2B, sin necesidad de employer of record. También en Deel.",
     newParts: "Piezas nuevas",
     newPartsInStep: "Piezas nuevas en el paso {n}",
+    partsInStep: "Piezas del paso {n}",
     step: "Paso",
     client: "Cliente",
     years: ["año", "años"],

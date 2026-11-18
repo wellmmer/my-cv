@@ -20,7 +20,7 @@ interface TowerProps {
 }
 
 const ARROW_SPACE = 44;
-const LABEL_SPACE = 240;
+const LABEL_SPACE = 190;
 
 export function Tower({ steps, U, liftTop = false, labels = false, ariaLabel, className }: TowerProps) {
   const count = steps.length;
