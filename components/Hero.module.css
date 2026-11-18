@@ -63,8 +63,10 @@
   max-width: 46ch;
   font-size: 15px;
   line-height: 1.5;
-  padding-left: 14px;
-  border-left: 4px solid var(--red);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
   color: var(--muted);
 }
 

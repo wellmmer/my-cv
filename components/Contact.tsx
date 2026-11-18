@@ -1,5 +1,6 @@
+import { Brick } from "@/components/brick/Brick";
 import { BrickButton } from "@/components/brick/BrickButton";
-import type { Locale } from "@/content/types";
+import { BRICK_HEX, type Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { CONTACT, cvPdfPath, mailtoUrl, whatsappUrl } from "@/lib/contact";
 import styles from "@/components/Contact.module.css";
@@ -31,7 +32,10 @@ export function Contact({ locale }: { locale: Locale }) {
         <span aria-hidden="true"> — </span>
         <a href={`tel:${CONTACT.phone.replace(/[^+\d]/g, "")}`}>{CONTACT.phone}</a>
       </p>
-      <p className={styles.note}>{t.contractNote}</p>
+      <p className={styles.note}>
+          <Brick color={BRICK_HEX.red} U={11} />
+          <span>{t.contractNote}</span>
+        </p>
     </section>
   );
 }

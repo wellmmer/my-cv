@@ -51,7 +51,10 @@ export function Hero({ locale }: { locale: Locale }) {
         <a className={styles.plain} href={cvPdfPath(locale, "ats")} download>
           {t.cta.plainText}
         </a>
-        <p className={styles.note}>{t.contractNote}</p>
+        <p className={styles.note}>
+          <Brick color={BRICK_HEX.red} U={11} />
+          <span>{t.contractNote}</span>
+        </p>
       </div>
 
       <div className={styles.build} data-hero-build>
