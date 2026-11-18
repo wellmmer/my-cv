@@ -1,0 +1,69 @@
+@page {
+  size: A4;
+  margin: 12mm 13mm;
+}
+
+:global(html),
+:global(body) {
+  background: #fff !important;
+}
+
+.page {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9pt;
+  line-height: 1.3;
+  color: #000;
+  max-width: 182mm;
+  margin: 0 auto;
+}
+
+.page h1 {
+  font-size: 20pt;
+}
+
+.title {
+  font-size: 11pt;
+  font-weight: 700;
+}
+
+.contact {
+  margin-top: 2pt;
+}
+
+.page a {
+  color: #000;
+}
+
+.page h2 {
+  font-size: 11pt;
+  text-transform: uppercase;
+  margin-top: 7pt;
+  padding-bottom: 1.5pt;
+  border-bottom: 1px solid #000;
+}
+
+.page h2 + * {
+  margin-top: 4pt;
+}
+
+.page p + p {
+  margin-top: 3pt;
+}
+
+.job {
+  margin-top: 4pt;
+  break-inside: avoid;
+}
+
+.job h3 {
+  font-size: 9.4pt;
+}
+
+.meta {
+  font-style: italic;
+}
+
+.job ul {
+  margin-top: 2pt;
+  padding-left: 14pt;
+}

@@ -1,0 +1,21 @@
+{
+  "steps": [
+    {
+      "n": 11,
+      "id": "example",
+      "company": "Example Co",
+      "companyUrl": "https://example.com",
+      "role": { "en": "Senior Engineer", "pt": "Engenheiro Sênior", "es": "Ingeniero Sénior" },
+      "start": "2025-10",
+      "end": "now",
+      "city": { "en": "Remote", "pt": "Remoto", "es": "Remoto" },
+      "brick": "red",
+      "bullets": {
+        "en": ["Built the example product.", "Shipped the example redesign."],
+        "pt": ["Desenvolvi o produto de exemplo.", "Entreguei o redesenho de exemplo."],
+        "es": ["Desarrollé el producto de ejemplo.", "Entregué el rediseño de ejemplo."]
+      },
+      "uses": ["typescript", "nextjs"]
+    }
+  ]
+}

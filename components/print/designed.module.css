@@ -1,0 +1,138 @@
+@page {
+  size: A4;
+  margin: 11mm 13mm;
+}
+
+:global(html),
+:global(body) {
+  background: #fff !important;
+}
+
+.page {
+  font-family: var(--font-rubik), Arial, sans-serif;
+  font-weight: 500;
+  font-size: 9.2pt;
+  line-height: 1.32;
+  color: var(--ink);
+  max-width: 184mm;
+  margin: 0 auto;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page a {
+  color: inherit;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 16mm 1fr;
+  gap: 4mm;
+  align-items: end;
+}
+
+.top .rail {
+  width: 12mm;
+}
+
+.page h1 {
+  font-size: 26pt;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.title {
+  font-size: 11pt;
+  font-weight: 700;
+  margin-top: 1mm;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 4mm;
+  margin-top: 1.5mm;
+  font-size: 8.6pt;
+}
+
+.block {
+  margin-top: 4mm;
+}
+
+.block h2 {
+  font-size: 10.5pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 1mm;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 1.5mm;
+}
+
+.note {
+  margin-top: 1.2mm;
+  padding-left: 2.5mm;
+  border-left: 3px solid var(--red);
+  font-size: 8.6pt;
+}
+
+.job {
+  display: grid;
+  grid-template-columns: 16mm 1fr;
+  gap: 4mm;
+  margin-top: 2.2mm;
+  break-inside: avoid;
+}
+
+.job .rail {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5mm;
+}
+
+.n {
+  font-size: 14pt;
+  font-weight: 900;
+  line-height: 1;
+  min-width: 6mm;
+  text-align: right;
+}
+
+.job h3 {
+  font-size: 9.8pt;
+  font-weight: 900;
+}
+
+.meta {
+  font-size: 8.4pt;
+}
+
+.job ul {
+  margin-top: 0.8mm;
+  padding-left: 4mm;
+}
+
+.job li::marker {
+  color: var(--red);
+}
+
+.small {
+  font-size: 8.6pt;
+}
+
+.project {
+  font-size: 8.8pt;
+  margin-top: 1mm;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 5mm;
+  break-inside: avoid;
+}
+
+.gap {
+  margin-top: 2.5mm;
+}
