@@ -1,0 +1,6 @@
+content/private.local.json
+private/
+.superpowers/
+.vitest/
+test-results/
+playwright-report/

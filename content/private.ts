@@ -56,7 +56,7 @@ export async function loadPrivateSteps(file?: string): Promise<Step[]> {
   const rel = file ?? PRIVATE_FILE;
   let raw: string;
   try {
-    raw = await readFile(path.resolve(process.cwd(), rel), "utf8");
+    raw = await readFile(path.resolve(/*turbopackIgnore: true*/ process.cwd(), rel), "utf8");
   } catch {
     throw new Error(`${rel} is missing`);
   }
