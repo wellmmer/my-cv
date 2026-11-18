@@ -87,6 +87,7 @@ export const cv: Cv = {
       n: 3,
       id: "iatec",
       company: "IATec",
+      companyUrl: "https://www.iatec.com",
       role: {
         en: "Dev Lead & Fullstack Developer",
         pt: "Dev Lead e Desenvolvedor Fullstack",
@@ -209,7 +210,7 @@ export const cv: Cv = {
           "Exporté y migré datos entre DB2, SAP Sybase, Oracle y SQL Server.",
         ],
       },
-      uses: ["typescript", "angular", "java", "spring-boot", "csharp", "dotnet", "db2", "oracle", "sqlserver"],
+      uses: ["javascript", "typescript", "angular", "java", "spring-boot", "csharp", "dotnet", "db2", "oracle", "sqlserver"],
     },
     {
       n: 7,
@@ -283,6 +284,7 @@ export const cv: Cv = {
       n: 9,
       id: "ryelabs",
       company: "RyeLabs",
+      companyUrl: "https://www.ryelabs.co",
       product: "Finove",
       role: SENIOR_FULLSTACK,
       start: "2022-12",

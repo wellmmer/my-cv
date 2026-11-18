@@ -69,6 +69,16 @@ describe("content", () => {
     for (const u of urls) expect(u).toMatch(/^https:\/\//);
   });
 
+  it("lists JavaScript on every step (used in every role since 2013)", () => {
+    for (const s of cv.steps) expect(s.uses, s.id).toContain("javascript");
+  });
+
+  it("links the companies Wellmmer supplied", () => {
+    const url = (id: string) => cv.steps.find((s) => s.id === id)?.companyUrl;
+    expect(url("iatec")).toBe("https://www.iatec.com");
+    expect(url("ryelabs")).toBe("https://www.ryelabs.co");
+  });
+
   it("references only known skills", () => {
     for (const id of [...cv.steps, ...cv.projects].flatMap((x) => x.uses)) {
       expect(Object.keys(SKILLS)).toContain(id);
