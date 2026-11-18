@@ -1,5 +1,6 @@
 "use client";
 
+import { Flag } from "@/components/Flag";
 import type { MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import { LOCALES, type Locale } from "@/content/types";
@@ -17,6 +18,8 @@ function sectionInView(): string | null {
   }
   return current;
 }
+
+const FLAG = { en: "us", pt: "br", es: "es" } as const;
 
 /** EN PT ES links. With JavaScript, the switch keeps the visitor on the section in view. */
 export function LangSwitch({ current, label }: { current: Locale; label: string }) {
@@ -39,6 +42,7 @@ export function LangSwitch({ current, label }: { current: Locale; label: string 
             className={l === current ? styles.langOn : undefined}
             onClick={keepSection}
           >
+            <Flag code={FLAG[l]} size={18} />
             {l.toUpperCase()}
           </a>
         </li>

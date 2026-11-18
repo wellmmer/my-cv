@@ -1,5 +1,7 @@
 import { bulletKey, bulletParts } from "@/lib/bullets";
+import type React from "react";
 import { Brick } from "@/components/brick/Brick";
+import { Icon } from "@/components/icons";
 import { Tower } from "@/components/brick/Tower";
 import { TowerMotion } from "@/components/TowerMotion";
 import { cv } from "@/content/cv";
@@ -33,24 +35,39 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                     {s.n}
                   </span>
                   <div>
-                    <p className={styles.kicker}>
-                      {t.step} {s.n}
-                    </p>
                     <h3 className={styles.company}>
-                      {s.companyUrl ? (
-                        <a href={s.companyUrl} target="_blank" rel="noopener noreferrer">
-                          {s.company}
-                        </a>
-                      ) : (
-                        s.company
-                      )}
+                      {s.company}
                       {s.product ? <span className={styles.product}> · {s.product}</span> : null}
+                      {s.companyUrl ? (
+                        <a
+                          className={styles.visit}
+                          href={s.companyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={t.visit.replace("{name}", s.company)}
+                          title={t.visit.replace("{name}", s.company)}
+                        >
+                          <Icon name="external" size={18} />
+                        </a>
+                      ) : null}
                     </h3>
                     <p className={styles.role}>{s.role[locale]}</p>
                     <p className={styles.meta}>
-                      <span>{formatRange(s.start, s.end, locale)}</span>
-                      <span>{formatDuration(inclusiveMonths(s.start, s.end, today), locale)}</span>
-                      <span>{s.city[locale]}</span>
+                      <span data-badge="range" className={`${styles.badge} ${styles[`b_${s.brick}`]}`}>
+                        {formatRange(s.start, s.end, locale)}
+                      </span>
+                      <span data-badge="duration" className={styles.badgeOutline}>
+                        {formatDuration(inclusiveMonths(s.start, s.end, today), locale)}
+                      </span>
+                      <span className={styles.place}>
+                        <Icon name="pin" size={16} />
+                        {s.city[locale]}
+                      </span>
+                      {s.via ? (
+                        <span>
+                          {t.via} {s.via}
+                        </span>
+                      ) : null}
                       {s.client ? (
                         <span>
                           {t.client}: {s.client}
@@ -59,7 +76,7 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                     </p>
                   </div>
                 </header>
-                <ul className={styles.bullets}>
+                <ul className={styles.bullets} data-bullets style={{ "--step": BRICK_HEX[s.brick] } as React.CSSProperties}>
                   {s.bullets[locale].map((b) => {
                     const { lead, text } = bulletParts(b);
                     return (
@@ -76,7 +93,7 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                     <ul>
                       {s.uses.map((id) => (
                         <li key={id}>
-                          <Brick color={BRICK_HEX[s.brick]} U={8} />
+                          <Brick color={BRICK_HEX[s.brick]} U={14} />
                           {SKILLS[id as keyof typeof SKILLS].label}
                         </li>
                       ))}
