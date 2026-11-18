@@ -83,6 +83,9 @@ test("full tower with reduced motion", async ({ browser }) => {
 
 test("language switch keeps the section", async ({ page }) => {
   await page.goto("/en#builds", { waitUntil: "networkidle" }); // hydrated
+  // Late layout shifts can move the hash target on slow runners; pin it in view.
+  await page.locator("#builds").evaluate((el) => el.scrollIntoView({ block: "start", behavior: "instant" }));
+  await page.waitForTimeout(200);
   // dispatchEvent: a real click does not scroll; Playwright's click would scroll the page first.
   await page.locator('ul[aria-label] a[hreflang="pt"]').dispatchEvent("click");
   await page.waitForURL(/\/pt#builds$/);
