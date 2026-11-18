@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private CV data and output (never public)
+content/private.local.json
+private/
+
+# test output
+test-results/
+playwright-report/
+
+# plan workspace
+.superpowers/
