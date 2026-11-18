@@ -1,7 +1,7 @@
 .section {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 96px var(--gutter) 48px;
+  padding: 128px var(--gutter) 48px;
 }
 
 .section h2 {
@@ -13,33 +13,95 @@
 
 .cols {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 32px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 36px 24px;
+  margin-top: 48px;
   font-size: 16px;
+  line-height: 1.5;
+  align-items: start;
 }
 
 .cols h3 {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 900;
 }
 
-.cols ul {
+.list,
+.checks,
+.langs {
   list-style: none;
   display: grid;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 14px;
 }
 
-.cols li span {
-  display: block;
+.list li {
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+}
+
+.list li span {
   font-size: 15px;
+  color: var(--muted);
+}
+
+.list li .badge {
+  margin-top: 4px;
+  padding: 2px 9px 3px;
+  border: 2px solid var(--edge);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.checks {
+  gap: 12px;
+}
+
+.checks li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.checks svg {
+  margin-top: 3px;
+  color: var(--green);
+}
+
+.langs li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.level {
+  margin-left: auto;
+  padding: 2px 10px 3px;
+  border: 2px solid #111;
+  border-radius: 7px;
+  background: var(--yellow);
+  color: #111;
+  font-size: 13px;
+  font-weight: 900;
 }
 
 .award {
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
-.cols p {
-  margin-top: 10px;
+.trophy {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.trophy svg {
+  color: #c4a40d;
+  margin-top: 2px;
 }

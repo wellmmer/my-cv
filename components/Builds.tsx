@@ -1,8 +1,18 @@
 import Image from "next/image";
 import { cv } from "@/content/cv";
-import type { Locale, Project } from "@/content/types";
+import { BrickCard } from "@/components/brick/BrickCard";
+import { Icon } from "@/components/icons";
+import type { BrickColor, Locale, Project } from "@/content/types";
 import { ui } from "@/content/ui";
 import styles from "@/components/Builds.module.css";
+
+const COLOR: Record<string, BrickColor> = {
+  computable: "blue",
+  campeonato: "green",
+  tippou: "red",
+  megasenha: "yellow",
+  "chimpcode-office": "black",
+};
 
 function statusTag(p: Project, t: (typeof ui)[Locale]): string | null {
   if (p.status === "wip") return t.status.wip;
@@ -19,7 +29,7 @@ export function Builds({ locale }: { locale: Locale }) {
         {cv.projects.map((p) => {
           const tag = statusTag(p, t);
           return (
-            <li key={p.id} className={`${styles.box} ${styles[p.size]}`}>
+            <BrickCard key={p.id} as="li" color={COLOR[p.id] ?? "white"} className={`${styles.box} ${styles[p.size]}`} studs={p.size === "sm" ? 4 : 8}>
               {p.shot ? (
                 <div className={styles.shot}>
                   <Image
@@ -38,23 +48,31 @@ export function Builds({ locale }: { locale: Locale }) {
                 </div>
                 <p>{p.what[locale]}</p>
                 <p className={styles.role}>{p.role[locale]}</p>
-                {p.stack.length ? <p className={styles.stack}>{p.stack.join(" · ")}</p> : null}
+                {p.stack.length ? (
+                  <ul className={styles.stack}>
+                    {p.stack.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                ) : null}
                 {p.live || p.repo ? (
                   <p className={styles.links}>
                     {p.live ? (
                       <a href={p.live} target="_blank" rel="noopener noreferrer">
+                        <Icon name="live" size={17} />
                         {t.links.live}
                       </a>
                     ) : null}
                     {p.repo ? (
                       <a href={p.repo} target="_blank" rel="noopener noreferrer">
+                        <Icon name="code" size={17} />
                         {t.links.code}
                       </a>
                     ) : null}
                   </p>
                 ) : null}
               </div>
-            </li>
+            </BrickCard>
           );
         })}
       </ul>
