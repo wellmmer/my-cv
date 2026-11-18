@@ -1,0 +1,24 @@
+.tower {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.label {
+  font: 500 15px var(--font-rubik), sans-serif;
+  fill: var(--ink);
+}
+
+.labelNow {
+  font: 900 18px var(--font-rubik), sans-serif;
+  fill: var(--ink);
+}
+
+.arrow path:first-child {
+  stroke: var(--ink);
+}
+
+.arrow path:last-child {
+  fill: var(--ink);
+}
