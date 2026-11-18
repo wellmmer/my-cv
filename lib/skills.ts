@@ -1,31 +1,24 @@
-import { monthSet, type End, type YearMonth } from "@/lib/dates";
+import { SKILL_GROUPS, SKILLS, type SkillId } from "@/content/skills";
+import type { SkillGroup } from "@/content/types";
 
-type Span = { start: YearMonth; end: End; uses: readonly string[] };
+type Entry = { since?: number; years?: number };
 
-/** Months each skill was used, counting overlapping steps once. */
-export function skillMonths(steps: readonly Span[], today: Date): Map<string, number> {
-  const sets = new Map<string, Set<number>>();
-  for (const s of steps) {
-    const months = monthSet(s.start, s.end, today);
-    for (const skill of s.uses) {
-      const set = sets.get(skill) ?? new Set<number>();
-      months.forEach((m) => set.add(m));
-      sets.set(skill, set);
-    }
-  }
-  return new Map([...sets].map(([k, v]) => [k, v.size]));
+/** Years of use: the fixed count, or years since the first year; null for AI items. */
+export function skillYearsFor(id: SkillId, today: Date): number | null {
+  const s = SKILLS[id] as Entry;
+  if (s.years !== undefined) return s.years;
+  if (s.since !== undefined) return today.getFullYear() - s.since;
+  return null;
 }
 
-export function skillYears(months: number): number {
-  return Math.max(1, Math.round(months / 12));
-}
-
-/** Per step (oldest first), the skills no earlier step used. */
-export function newParts(steps: readonly { uses: readonly string[] }[]): string[][] {
-  const seen = new Set<string>();
-  return steps.map((s) => {
-    const fresh = s.uses.filter((u) => !seen.has(u));
-    s.uses.forEach((u) => seen.add(u));
-    return fresh;
-  });
+/** Every group in display order; inside a group, most years first (stable). */
+export function skillsByGroup(today: Date): { group: SkillGroup; items: { id: SkillId; years: number | null }[] }[] {
+  const ids = Object.keys(SKILLS) as SkillId[];
+  return SKILL_GROUPS.map((group) => ({
+    group,
+    items: ids
+      .filter((id) => SKILLS[id].group === group)
+      .map((id) => ({ id, years: skillYearsFor(id, today) }))
+      .sort((a, b) => (b.years ?? 0) - (a.years ?? 0)),
+  }));
 }

@@ -18,7 +18,15 @@ export const BRICK_HEX: Record<BrickColor, string> = {
   green: "#00852B",
 };
 
-export type SkillGroup = "languages" | "frontend" | "backend" | "data" | "cloud" | "ai";
+export type SkillGroup =
+  | "languages"
+  | "frontend"
+  | "backend"
+  | "data"
+  | "cloud"
+  | "versioning"
+  | "analytics"
+  | "ai";
 
 /** A CV bullet: plain text, or a bold lead (a product name) and its text. */
 export type Bullet = string | { lead: string; text: string };

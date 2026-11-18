@@ -7,12 +7,10 @@ import { SKILLS } from "@/content/skills";
 import { BRICK_HEX, type Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { formatDuration, formatRange, inclusiveMonths } from "@/lib/dates";
-import { newParts } from "@/lib/skills";
 import styles from "@/components/Steps.module.css";
 
 export function Steps({ locale, today }: { locale: Locale; today: Date }) {
   const t = ui[locale];
-  const fresh = newParts(cv.steps);
   const tower = cv.steps.map((s) => ({ n: s.n, color: BRICK_HEX[s.brick], label: s.short ?? s.company }));
   return (
     <section id="steps" className={styles.section} aria-labelledby="steps-h">
@@ -24,7 +22,7 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
           <Tower steps={tower} U={24} labels ariaLabel={t.towerLabel} />
         </div>
         <ol className={styles.list}>
-          {cv.steps.map((s, i) => (
+          {cv.steps.map((s) => (
             <li key={s.n}>
               <article id={`step-${s.n}`} data-step={s.n} className={styles.step}>
                 <div data-tower="mini" className={styles.mini}>
@@ -72,11 +70,11 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                   })}
                 </ul>
                 {s.note ? <p className={styles.note}>{s.note[locale]}</p> : null}
-                {fresh[i].length ? (
+                {s.uses.length ? (
                   <div className={styles.parts}>
                     <p className={styles.partsLabel}>{t.newParts}</p>
                     <ul>
-                      {fresh[i].map((id) => (
+                      {s.uses.map((id) => (
                         <li key={id}>
                           <Brick color={BRICK_HEX[s.brick]} U={8} />
                           {SKILLS[id as keyof typeof SKILLS].label}

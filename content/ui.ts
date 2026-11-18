@@ -55,7 +55,9 @@ export const ui: L<Ui> = {
       frontend: "Frontend",
       backend: "Backend",
       data: "Data",
-      cloud: "Cloud and tooling",
+      cloud: "Cloud",
+      versioning: "Versioning",
+      analytics: "Analytics & Monitoring",
       ai: "AI",
     },
     cta: {
@@ -102,7 +104,9 @@ export const ui: L<Ui> = {
       frontend: "Frontend",
       backend: "Backend",
       data: "Dados",
-      cloud: "Nuvem e ferramentas",
+      cloud: "Nuvem",
+      versioning: "Versionamento",
+      analytics: "Analytics e Monitoramento",
       ai: "IA",
     },
     cta: {
@@ -149,7 +153,9 @@ export const ui: L<Ui> = {
       frontend: "Frontend",
       backend: "Backend",
       data: "Datos",
-      cloud: "Nube y herramientas",
+      cloud: "Nube",
+      versioning: "Versionado",
+      analytics: "Analítica y Monitoreo",
       ai: "IA",
     },
     cta: {

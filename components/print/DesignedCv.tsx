@@ -90,7 +90,7 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
         <h2>{t.atsSections.skills}</h2>
         {m.skills.map((g) => (
           <p key={g.group} className={styles.small}>
-            <b>{t.groups[g.group]}:</b> {g.labels.join(", ")}
+            <b>{t.groups[g.group]}:</b> {g.items.map((i) => i.label).join(", ")}
           </p>
         ))}
       </section>

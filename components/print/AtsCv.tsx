@@ -64,7 +64,7 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
       <h2>{t.atsSections.skills}</h2>
       {m.skills.map((g) => (
         <p key={g.group}>
-          {t.groups[g.group]}: {g.labels.join(", ")}
+          {t.groups[g.group]}: {g.items.map((i) => i.label).join(", ")}
         </p>
       ))}
 
