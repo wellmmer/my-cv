@@ -114,7 +114,7 @@ export const cv: Cv = {
           "Definí la arquitectura de la solución y desarrollé las funcionalidades más complejas en Angular y C# .NET Core.",
         ],
       },
-      uses: ["typescript", "angular", "csharp", "dotnet", "sqlserver", "azure-devops"],
+      uses: ["javascript", "typescript", "angular", "csharp", "dotnet", "sqlserver", "azure-devops"],
     },
     {
       n: 4,
@@ -142,7 +142,7 @@ export const cv: Cv = {
           "Migré el backend de RPC a REST en Java con Spring Boot y entregué diseños técnicos al cliente.",
         ],
       },
-      uses: ["typescript", "angular", "java", "spring-boot", "storybook"],
+      uses: ["javascript", "typescript", "angular", "java", "spring-boot", "storybook"],
     },
     {
       n: 5,
@@ -176,7 +176,7 @@ export const cv: Cv = {
         es: "Tippou cerró en abril de 2020, durante la pandemia de COVID-19.",
       },
       uses: [
-        "typescript", "react", "react-native", "redux", "mui", "nodejs", "express",
+        "javascript", "typescript", "react", "react-native", "redux", "mui", "nodejs", "express",
         "mongodb", "dynamodb", "aws", "aws-lambda", "firebase", "gcp",
       ],
     },
@@ -243,7 +243,7 @@ export const cv: Cv = {
         ],
       },
       uses: [
-        "typescript", "react", "nextjs", "react-native", "tailwind", "mui", "nodejs", "express",
+        "javascript", "typescript", "react", "nextjs", "react-native", "tailwind", "mui", "nodejs", "express",
         "socketio", "mongodb", "aws", "aws-lambda", "sentry", "python",
       ],
     },
@@ -275,7 +275,7 @@ export const cv: Cv = {
         ],
       },
       uses: [
-        "typescript", "react", "nextjs", "mui", "nodejs", "express", "socketio",
+        "javascript", "typescript", "react", "nextjs", "mui", "nodejs", "express", "socketio",
         "postgresql", "aws", "aws-lambda", "aws-step-functions", "sentry",
       ],
     },
@@ -304,7 +304,7 @@ export const cv: Cv = {
         ],
       },
       uses: [
-        "typescript", "react", "nextjs", "redux", "tailwind", "storybook",
+        "javascript", "typescript", "react", "nextjs", "redux", "tailwind", "storybook",
         "nodejs", "nestjs", "postgresql", "aws", "sentry",
       ],
     },
@@ -335,7 +335,7 @@ export const cv: Cv = {
         ],
       },
       uses: [
-        "typescript", "react", "nextjs", "redux", "tailwind", "storybook",
+        "javascript", "typescript", "react", "nextjs", "redux", "tailwind", "storybook",
         "nodejs", "nestjs", "socketio", "postgresql", "aws", "sentry",
       ],
       keyParts: ["nextjs", "react", "nestjs", "postgresql", "aws", "typescript"],

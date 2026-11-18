@@ -10,7 +10,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "leak": "tsx scripts/leak.ts",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "shots": "tsx scripts/shots.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

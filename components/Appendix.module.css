@@ -1,0 +1,45 @@
+.section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 96px var(--gutter) 48px;
+}
+
+.section h2 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+  font-size: 16px;
+}
+
+.cols h3 {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.cols ul {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cols li span {
+  display: block;
+  font-size: 15px;
+}
+
+.award {
+  margin-top: 24px;
+}
+
+.cols p {
+  margin-top: 10px;
+}

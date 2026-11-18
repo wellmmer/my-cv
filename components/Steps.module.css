@@ -1,0 +1,162 @@
+.section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 96px var(--gutter) 48px;
+}
+
+.heading,
+.section h2 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 380px) minmax(0, 1fr);
+  gap: 56px;
+  margin-top: 40px;
+}
+
+.sticky {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  max-height: calc(100svh - 120px);
+}
+
+.sticky svg {
+  max-height: calc(100svh - 120px);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: 64px;
+}
+
+.step {
+  scroll-margin-top: 96px;
+  min-height: 46svh;
+}
+
+.mini {
+  display: none;
+}
+
+.head {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.numeral {
+  font-size: 88px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  min-width: 1.1em;
+}
+
+.kicker {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.company {
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 900;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.company a {
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+}
+
+.product {
+  font-weight: 700;
+}
+
+.role {
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+.bullets {
+  margin-top: 18px;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  max-width: 68ch;
+}
+
+.bullets li::marker {
+  color: var(--red);
+}
+
+.note {
+  margin-top: 16px;
+  max-width: 60ch;
+  padding: 10px 14px;
+  border: 2.4px dashed var(--ink);
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.parts {
+  margin-top: 18px;
+}
+
+.partsLabel {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.parts ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.parts li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sticky {
+    display: none;
+  }
+  .mini {
+    display: block;
+    width: 72px;
+    margin-bottom: 12px;
+  }
+  .step {
+    min-height: 0;
+  }
+  .numeral {
+    font-size: 64px;
+  }
+}
