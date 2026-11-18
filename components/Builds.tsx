@@ -1,3 +1,4 @@
+import { SnapIn } from "@/components/SnapIn";
 import Image from "next/image";
 import { cv } from "@/content/cv";
 import { BrickCard } from "@/components/brick/BrickCard";
@@ -76,6 +77,7 @@ export function Builds({ locale }: { locale: Locale }) {
           );
         })}
       </ul>
+      <SnapIn />
     </section>
   );
 }

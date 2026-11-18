@@ -1,3 +1,4 @@
+import { SnapIn } from "@/components/SnapIn";
 import { BrickCard } from "@/components/brick/BrickCard";
 import { Flag } from "@/components/Flag";
 import { Icon } from "@/components/icons";
@@ -58,6 +59,7 @@ export function Appendix({ locale }: { locale: Locale }) {
           </p>
         </BrickCard>
       </div>
+      <SnapIn />
     </section>
   );
 }

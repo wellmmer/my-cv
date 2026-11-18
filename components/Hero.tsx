@@ -3,6 +3,7 @@ import { Brick } from "@/components/brick/Brick";
 import { BrickButton } from "@/components/brick/BrickButton";
 import { BrickCard } from "@/components/brick/BrickCard";
 import { Tower } from "@/components/brick/Tower";
+import { HeroMotion } from "@/components/HeroMotion";
 import { cv } from "@/content/cv";
 import { SKILLS } from "@/content/skills";
 import { BRICK_HEX, type BrickColor, type Locale } from "@/content/types";
@@ -63,6 +64,7 @@ export function Hero({ locale }: { locale: Locale }) {
           labelHref={(n) => `#step-${n}`}
           className={styles.tower}
         />
+        <HeroMotion />
       </div>
 
       <BrickCard color="red" as="aside" className={styles.box} labelledBy="parts-now" studs={5}>

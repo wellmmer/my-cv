@@ -1,3 +1,4 @@
+import { SnapIn } from "@/components/SnapIn";
 import { BrickCard } from "@/components/brick/BrickCard";
 import { SKILLS } from "@/content/skills";
 import type { BrickColor, Locale, SkillGroup } from "@/content/types";
@@ -41,6 +42,7 @@ export function Parts({ locale, today }: { locale: Locale; today: Date }) {
           </BrickCard>
         ))}
       </div>
+      <SnapIn />
     </section>
   );
 }

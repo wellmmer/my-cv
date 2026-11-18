@@ -134,3 +134,21 @@
     grid-column: auto;
   }
 }
+
+.grid > .box {
+  transition: transform 160ms ease-out;
+}
+
+.grid > .box:hover,
+.grid > .box:focus-within {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid > .box,
+  .grid > .box:hover,
+  .grid > .box:focus-within {
+    transition: none;
+    transform: none;
+  }
+}
