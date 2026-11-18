@@ -14,7 +14,7 @@ export function Avatar({ labels }: { labels: { showPhoto: string; showBricks: st
       data-avatar
       className={styles.avatar}
       aria-pressed={photo}
-      aria-label={photo ? labels.showBricks : labels.showPhoto}
+      aria-label={labels.showPhoto}
       title={photo ? labels.showBricks : labels.showPhoto}
       onClick={() => setPhoto((p) => !p)}
     >

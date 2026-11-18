@@ -135,13 +135,14 @@
   }
 }
 
+/* Hover lift uses the independent `translate` property: GSAP's snap-in owns `transform`. */
 .grid > .box {
-  transition: transform 160ms ease-out;
+  transition: translate 160ms ease-out;
 }
 
 .grid > .box:hover,
 .grid > .box:focus-within {
-  transform: translateY(-3px);
+  translate: 0 -3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -149,6 +150,6 @@
   .grid > .box:hover,
   .grid > .box:focus-within {
     transition: none;
-    transform: none;
+    translate: none;
   }
 }

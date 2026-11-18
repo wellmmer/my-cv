@@ -151,9 +151,25 @@
   font-weight: 800;
 }
 
-.bullets li::marker {
-  color: var(--step, var(--red));
-  font-size: 1.1em;
+/* Markers are tiny bricks: step colour inside an ink keyline, visible on any page colour. */
+.bullets {
+  list-style: none;
+}
+
+.bullets li {
+  position: relative;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 0.48em;
+  width: 11px;
+  height: 8px;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: var(--step, var(--red));
 }
 
 .note {

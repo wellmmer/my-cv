@@ -43,7 +43,7 @@ export function ThemeToggle({ labels }: { labels: { toDark: string; toLight: str
       data-theme-toggle
       className={styles.toggle}
       aria-pressed={dark}
-      aria-label={dark ? labels.toLight : labels.toDark}
+      aria-label={labels.toDark}
       title={dark ? labels.toLight : labels.toDark}
       onClick={flip}
     >
