@@ -2,7 +2,9 @@ import type { L, SkillGroup } from "@/content/types";
 
 export interface Ui {
   metaTitle: string;
-  nav: { steps: string; projects: string; contact: string; language: string };
+  /** The job title shown under the name. */
+  title: string;
+  nav: { steps: string; builds: string; contact: string; language: string };
   sections: { steps: string; builds: string; parts: string; appendix: string };
   atsSections: {
     summary: string;
@@ -20,9 +22,12 @@ export interface Ui {
   emailSubject: string;
   contactHeading: string;
   contractNote: string;
-  newParts: string;
-  /** `{n}` is the step number. */
-  newPartsInStep: string;
+  partsInThisStep: string;
+  via: string;
+  /** `{name}` is the company name. */
+  visit: string;
+  theme: { toDark: string; toLight: string };
+  avatar: { showPhoto: string; showBricks: string };
   /** `{n}` is the step number. */
   partsInStep: string;
   step: string;
@@ -38,8 +43,9 @@ export interface Ui {
 export const ui: L<Ui> = {
   en: {
     metaTitle: "Wellmmer Lucas, Senior Software Engineer",
-    nav: { steps: "Steps", projects: "Projects", contact: "Contact", language: "Language" },
-    sections: { steps: "Steps", builds: "Other builds", parts: "Parts inventory", appendix: "Appendix" },
+    title: "Senior Software Engineer",
+    nav: { steps: "Steps", builds: "Builds", contact: "Contact", language: "Language" },
+    sections: { steps: "Build steps", builds: "Side builds", parts: "Parts bin", appendix: "Extra pieces" },
     atsSections: {
       summary: "Summary",
       experience: "Experience",
@@ -62,7 +68,7 @@ export const ui: L<Ui> = {
     },
     cta: {
       download: "Download CV (PDF)",
-      plainText: "Plain text version",
+      plainText: "Plain-text CV (for ATS)",
       whatsapp: "WhatsApp",
       email: "Email",
       linkedin: "LinkedIn",
@@ -70,11 +76,14 @@ export const ui: L<Ui> = {
     },
     whatsappText: "Hi Wellmmer, I saw your CV and would like to talk about a role.",
     emailSubject: "Role for Wellmmer Lucas",
-    contactHeading: "Last step: add yourself.",
+    contactHeading: "Last step: snap yourself on.",
     contractNote:
-      "Contract-ready. I invoice through my own Brazilian company, ChimpCode: since 2018, and for companies abroad since 2022. B2B contract, no employer of record needed. Also on Deel.",
-    newParts: "New parts",
-    newPartsInStep: "New parts in step {n}",
+      "Contract-ready: I invoice through ChimpCode, my own Brazilian company, since 2018, and for companies abroad since 2022. B2B contract, no employer of record needed, and also on Deel.",
+    partsInThisStep: "Parts in this step",
+    via: "via",
+    visit: "Visit {name}",
+    theme: { toDark: "Switch to dark mode", toLight: "Switch to light mode" },
+    avatar: { showPhoto: "Show my photo", showBricks: "Show the brick version" },
     partsInStep: "Parts in step {n}",
     step: "Step",
     client: "Client",
@@ -87,8 +96,9 @@ export const ui: L<Ui> = {
   },
   pt: {
     metaTitle: "Wellmmer Lucas, Engenheiro de Software Sênior",
-    nav: { steps: "Etapas", projects: "Projetos", contact: "Contato", language: "Idioma" },
-    sections: { steps: "Etapas", builds: "Outras construções", parts: "Inventário de peças", appendix: "Apêndice" },
+    title: "Engenheiro de Software Sênior",
+    nav: { steps: "Etapas", builds: "Montagens", contact: "Contato", language: "Idioma" },
+    sections: { steps: "Etapas da montagem", builds: "Montagens paralelas", parts: "Caixa de peças", appendix: "Peças extras" },
     atsSections: {
       summary: "Resumo",
       experience: "Experiência",
@@ -111,7 +121,7 @@ export const ui: L<Ui> = {
     },
     cta: {
       download: "Baixar CV (PDF)",
-      plainText: "Versão em texto simples",
+      plainText: "CV em texto simples (para ATS)",
       whatsapp: "WhatsApp",
       email: "E-mail",
       linkedin: "LinkedIn",
@@ -119,11 +129,14 @@ export const ui: L<Ui> = {
     },
     whatsappText: "Olá Wellmmer, vi seu currículo e gostaria de conversar sobre uma vaga.",
     emailSubject: "Vaga para Wellmmer Lucas",
-    contactHeading: "Última etapa: adicione você.",
+    contactHeading: "Última etapa: encaixe-se aqui.",
     contractNote:
-      "Pronto para contrato. Emito nota fiscal pela minha empresa no Brasil, a ChimpCode: desde 2018, e para empresas do exterior desde 2022. Contrato B2B, sem necessidade de employer of record. Também trabalho via Deel.",
-    newParts: "Peças novas",
-    newPartsInStep: "Peças novas na etapa {n}",
+      "Pronto para contrato: emito nota pela ChimpCode, minha empresa no Brasil, desde 2018, e para empresas do exterior desde 2022. Contrato B2B, sem necessidade de employer of record, e também via Deel.",
+    partsInThisStep: "Peças desta etapa",
+    via: "via",
+    visit: "Visitar {name}",
+    theme: { toDark: "Ativar modo escuro", toLight: "Ativar modo claro" },
+    avatar: { showPhoto: "Mostrar minha foto", showBricks: "Mostrar a versão em blocos" },
     partsInStep: "Peças da etapa {n}",
     step: "Etapa",
     client: "Cliente",
@@ -136,8 +149,9 @@ export const ui: L<Ui> = {
   },
   es: {
     metaTitle: "Wellmmer Lucas, Ingeniero de Software Sénior",
-    nav: { steps: "Pasos", projects: "Proyectos", contact: "Contacto", language: "Idioma" },
-    sections: { steps: "Pasos", builds: "Otras construcciones", parts: "Inventario de piezas", appendix: "Apéndice" },
+    title: "Ingeniero de Software Sénior",
+    nav: { steps: "Pasos", builds: "Montajes", contact: "Contacto", language: "Idioma" },
+    sections: { steps: "Pasos de montaje", builds: "Montajes paralelos", parts: "Caja de piezas", appendix: "Piezas extra" },
     atsSections: {
       summary: "Resumen",
       experience: "Experiencia",
@@ -160,7 +174,7 @@ export const ui: L<Ui> = {
     },
     cta: {
       download: "Descargar CV (PDF)",
-      plainText: "Versión en texto simple",
+      plainText: "CV en texto simple (para ATS)",
       whatsapp: "WhatsApp",
       email: "Correo",
       linkedin: "LinkedIn",
@@ -168,11 +182,14 @@ export const ui: L<Ui> = {
     },
     whatsappText: "Hola Wellmmer, vi tu CV y me gustaría hablar sobre una vacante.",
     emailSubject: "Vacante para Wellmmer Lucas",
-    contactHeading: "Último paso: agrégate tú.",
+    contactHeading: "Último paso: encájate aquí.",
     contractNote:
-      "Listo para contratar. Facturo a través de mi propia empresa en Brasil, ChimpCode: desde 2018, y a empresas del exterior desde 2022. Contrato B2B, sin necesidad de employer of record. También en Deel.",
-    newParts: "Piezas nuevas",
-    newPartsInStep: "Piezas nuevas en el paso {n}",
+      "Listo para contratar: facturo con ChimpCode, mi propia empresa en Brasil, desde 2018, y a empresas del exterior desde 2022. Contrato B2B, sin necesidad de employer of record, y también por Deel.",
+    partsInThisStep: "Piezas de este paso",
+    via: "vía",
+    visit: "Visitar {name}",
+    theme: { toDark: "Activar modo oscuro", toLight: "Activar modo claro" },
+    avatar: { showPhoto: "Mostrar mi foto", showBricks: "Mostrar la versión en bloques" },
     partsInStep: "Piezas del paso {n}",
     step: "Paso",
     client: "Cliente",

@@ -5,7 +5,7 @@ import { cv } from "@/content/cv";
 import { BRICK_HEX, type Locale, type Step } from "@/content/types";
 import { ui } from "@/content/ui";
 import { CONTACT } from "@/lib/contact";
-import { formatDuration, formatRange, inclusiveMonths, yearsOfExperience } from "@/lib/dates";
+import { formatDuration, formatRange, inclusiveMonths } from "@/lib/dates";
 import { SITE_URL } from "@/lib/site";
 import { companyLine, printModel } from "@/components/print/model";
 import styles from "@/components/print/designed.module.css";
@@ -35,7 +35,7 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
 
       <section className={styles.block}>
         <h2>{t.atsSections.summary}</h2>
-        <p>{cv.summary[locale].replace("{years}", String(yearsOfExperience(today)))}</p>
+        <p>{cv.summary[locale]}</p>
         <p className={styles.note}>{t.contractNote}</p>
       </section>
 

@@ -16,9 +16,9 @@ export const cv: Cv = {
   name: "Wellmmer Lucas",
 
   summary: {
-    en: "Senior software engineer, {years} years, built in 10 steps since 2013. I ship web products end to end, now with AI agents in the loop. Remote from Sorocaba, Brazil (UTC-3).",
-    pt: "Engenheiro de software sênior, {years} anos, construído em 10 etapas desde 2013. Entrego produtos web de ponta a ponta, agora com agentes de IA no processo. Remoto de Sorocaba, Brasil (UTC-3).",
-    es: "Ingeniero de software sénior, {years} años, construido en 10 pasos desde 2013. Entrego productos web de punta a punta, ahora con agentes de IA en el proceso. Remoto desde Sorocaba, Brasil (UTC-3).",
+    en: "Senior Software Engineer. I've been snapping JavaScript bricks together since 2013: web, mobile and backend, from React and React Native to Node.js and NestJS. These days AI agents build alongside me. Remote from Sorocaba, Brazil (UTC-3).",
+    pt: "Engenheiro de Software Sênior. Encaixo blocos de JavaScript desde 2013: web, mobile e backend, de React e React Native a Node.js e NestJS. Hoje, agentes de IA constroem junto comigo. Remoto de Sorocaba, Brasil (UTC-3).",
+    es: "Ingeniero de Software Sénior. Encajo bloques de JavaScript desde 2013: web, mobile y backend, de React y React Native a Node.js y NestJS. Hoy, agentes de IA construyen a mi lado. Remoto desde Sorocaba, Brasil (UTC-3).",
   },
 
   // Oldest first. Bullets use only facts from the old CV and LinkedIn.
@@ -317,6 +317,7 @@ export const cv: Cv = {
       short: "CIAL D&B",
       companyUrl: "https://www.cialdnb.com",
       product: "Dunsguide",
+      via: "RyeLabs",
       role: SENIOR_FULLSTACK,
       start: "2023-03",
       end: "now",
@@ -324,18 +325,31 @@ export const cv: Cv = {
       brick: "red",
       bullets: {
         en: [
-          "Build Dunsguide, one of CIAL Dun & Bradstreet's main products, inside the RyeLabs team.",
-          "Work across the stack: React and Next.js on the front, NestJS and PostgreSQL on AWS behind.",
+          { lead: "CIAL360 Task Hub", text: "built the live Tasks area where companies complete their CIAL360 requests, from the event webhook to typed real-time refresh over SSE and Redis, rolled out behind a feature flag." },
+          { lead: "DUNS Doctor", text: "in a hackathon, built an internal tool that diagnoses a company's data: a health score, issues by severity, data-source panels and an AI summary for support teams." },
+          { lead: "Pulso", text: "built Mexico financial-health and compliance views on SAT and Buró data, with a streaming AI assistant that uses tool calling and live web scraping." },
+          { lead: "AI-first workflow", text: "work with Claude Code every day: written plans, subagent-driven development, and automated PR and security reviews across a Next.js and NestJS stack." },
+          { lead: "SAT Auth Flow", text: "built the flow where a company proves who it is with its SAT tax credentials to unlock its tax data: queue-based checks, typed failure reasons, retries and recovery screens." },
+          { lead: "Buró Auth Flow", text: "built the online Buró de Crédito authorization with e-signature and the automatic credit-report order behind it: worker jobs, ID-mismatch guards and a retry sweep." },
         ],
         pt: [
-          "Desenvolvo o Dunsguide, um dos principais produtos da CIAL Dun & Bradstreet, dentro do time da RyeLabs.",
-          "Atuo em toda a stack: React e Next.js no front, NestJS e PostgreSQL na AWS no back.",
+          { lead: "CIAL360 Task Hub", text: "criei a área de Tarefas ao vivo, onde as empresas concluem suas solicitações do CIAL360, do webhook de eventos à atualização em tempo real tipada via SSE e Redis, liberada por feature flag." },
+          { lead: "DUNS Doctor", text: "num hackathon, criei uma ferramenta interna que diagnostica os dados de uma empresa: score de saúde, problemas por severidade, painéis por fonte de dados e um resumo com IA para o time de suporte." },
+          { lead: "Pulso", text: "criei as visões de saúde financeira e compliance do México com dados do SAT e do Buró, com um assistente de IA em streaming que usa tool calling e web scraping ao vivo." },
+          { lead: "Fluxo AI-first", text: "trabalho com Claude Code todos os dias: planos escritos, desenvolvimento com subagentes e revisões automáticas de PR e segurança numa stack Next.js e NestJS." },
+          { lead: "SAT Auth Flow", text: "criei o fluxo em que a empresa comprova sua identidade com as credenciais fiscais do SAT para liberar seus dados fiscais: verificações em fila, motivos de falha tipados, novas tentativas e telas de recuperação." },
+          { lead: "Buró Auth Flow", text: "criei a autorização online do Buró de Crédito com assinatura eletrônica e o pedido automático do relatório de crédito por trás dela: jobs em workers, proteção contra IDs divergentes e varredura de novas tentativas." },
         ],
         es: [
-          "Desarrollo Dunsguide, uno de los principales productos de CIAL Dun & Bradstreet, dentro del equipo de RyeLabs.",
-          "Trabajo en todo el stack: React y Next.js en el front, NestJS y PostgreSQL en AWS en el back.",
+          { lead: "CIAL360 Task Hub", text: "creé el área de Tareas en vivo donde las empresas completan sus solicitudes de CIAL360, desde el webhook de eventos hasta la actualización en tiempo real tipada vía SSE y Redis, lanzada con feature flag." },
+          { lead: "DUNS Doctor", text: "en un hackathon, creé una herramienta interna que diagnostica los datos de una empresa: puntaje de salud, problemas por severidad, paneles por fuente de datos y un resumen con IA para el equipo de soporte." },
+          { lead: "Pulso", text: "creé las vistas de salud financiera y cumplimiento de México con datos del SAT y del Buró, con un asistente de IA en streaming que usa tool calling y web scraping en vivo." },
+          { lead: "Flujo AI-first", text: "trabajo con Claude Code todos los días: planes escritos, desarrollo con subagentes y revisiones automáticas de PR y seguridad en un stack Next.js y NestJS." },
+          { lead: "SAT Auth Flow", text: "creé el flujo en el que la empresa acredita su identidad con sus credenciales fiscales del SAT para desbloquear sus datos fiscales: verificaciones en cola, motivos de falla tipados, reintentos y pantallas de recuperación." },
+          { lead: "Buró Auth Flow", text: "creé la autorización en línea del Buró de Crédito con firma electrónica y el pedido automático del reporte de crédito detrás de ella: jobs en workers, protección contra IDs que no coinciden y un barrido de reintentos." },
         ],
       },
+      pdfBullets: 4,
       uses: [
         "javascript", "typescript", "react", "nextjs", "redux", "tailwind", "storybook",
         "nodejs", "nestjs", "socketio", "postgresql", "redis", "aws", "sentry", "posthog",
@@ -413,7 +427,7 @@ export const cv: Cv = {
     },
     {
       id: "chimpcode-office",
-      name: "chimpcode-office",
+      name: "ChimpCode Office",
       size: "sm",
       status: "wip",
       what: {

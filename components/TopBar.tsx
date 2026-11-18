@@ -15,7 +15,7 @@ export function TopBar({ locale }: { locale: Locale }) {
       </a>
       <nav className={styles.nav}>
         <a href="#steps">{t.nav.steps}</a>
-        <a href="#builds">{t.nav.projects}</a>
+        <a href="#builds">{t.nav.builds}</a>
         <a href="#contact">{t.nav.contact}</a>
       </nav>
       <LangSwitch current={locale} label={t.nav.language} />

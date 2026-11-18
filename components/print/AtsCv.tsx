@@ -3,7 +3,7 @@ import { cv } from "@/content/cv";
 import type { Locale, Step } from "@/content/types";
 import { ui } from "@/content/ui";
 import { CONTACT } from "@/lib/contact";
-import { formatRange, yearsOfExperience } from "@/lib/dates";
+import { formatRange } from "@/lib/dates";
 import { SITE_URL } from "@/lib/site";
 import { companyLine, printModel } from "@/components/print/model";
 import styles from "@/components/print/ats.module.css";
@@ -23,7 +23,7 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
       </p>
 
       <h2>{t.atsSections.summary}</h2>
-      <p>{cv.summary[locale].replace("{years}", String(yearsOfExperience(today)))}</p>
+      <p>{cv.summary[locale]}</p>
       <p>{t.contractNote}</p>
 
       <h2>{t.atsSections.experience}</h2>

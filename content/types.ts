@@ -40,6 +40,8 @@ export interface Step {
   companyUrl?: string;
   /** Product built at this step, e.g. Finove. */
   product?: string;
+  /** Company the contract ran through, e.g. RyeLabs. */
+  via?: string;
   /** Client the work was for, e.g. Deutsche Bank. */
   client?: string;
   role: L;
@@ -80,7 +82,6 @@ export interface Education {
 
 export interface Cv {
   name: string;
-  /** `{years}` is replaced with yearsOfExperience() at render time. */
   summary: L;
   steps: Step[];
   projects: Project[];

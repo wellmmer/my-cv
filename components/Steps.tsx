@@ -72,7 +72,7 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                 {s.note ? <p className={styles.note}>{s.note[locale]}</p> : null}
                 {s.uses.length ? (
                   <div className={styles.parts}>
-                    <p className={styles.partsLabel}>{t.newParts}</p>
+                    <p className={styles.partsLabel}>{t.partsInThisStep}</p>
                     <ul>
                       {s.uses.map((id) => (
                         <li key={id}>

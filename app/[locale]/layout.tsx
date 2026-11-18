@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { cv } from "@/content/cv";
 import { LOCALES } from "@/content/types";
 import { ui } from "@/content/ui";
-import { yearsOfExperience } from "@/lib/dates";
 import { isLocale } from "@/lib/locale";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
@@ -20,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const description = cv.summary[locale].replace("{years}", String(yearsOfExperience(new Date())));
+  const description = cv.summary[locale];
   return {
     metadataBase: new URL(SITE_URL),
     title: ui[locale].metaTitle,

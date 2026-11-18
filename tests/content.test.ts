@@ -34,10 +34,10 @@ describe("content", () => {
     ]);
   });
 
-  it("gives every step 2 to 4 bullets, the same count in each language", () => {
+  it("gives every step 2 to 6 bullets, the same count in each language", () => {
     for (const s of cv.steps) {
       expect(s.bullets.en.length, s.id).toBeGreaterThanOrEqual(2);
-      expect(s.bullets.en.length, s.id).toBeLessThanOrEqual(4);
+      expect(s.bullets.en.length, s.id).toBeLessThanOrEqual(6);
       expect(s.bullets.pt.length, s.id).toBe(s.bullets.en.length);
       expect(s.bullets.es.length, s.id).toBe(s.bullets.en.length);
     }
@@ -98,5 +98,43 @@ describe("content", () => {
 
   it("has no empty strings in any language", () => {
     for (const text of copy()) expect(text.trim().length).toBeGreaterThan(0);
+  });
+
+  it("opens with the approved summary", () => {
+    expect(cv.summary.en).toBe(
+      "Senior Software Engineer. I've been snapping JavaScript bricks together since 2013: web, mobile and backend, from React and React Native to Node.js and NestJS. These days AI agents build alongside me. Remote from Sorocaba, Brazil (UTC-3).",
+    );
+    for (const l of LOCALES) expect(cv.summary[l]).not.toContain("{years}");
+  });
+
+  it("uses the agreed title in each language", () => {
+    expect(ui.en.title).toBe("Senior Software Engineer");
+    expect(ui.pt.title).toBe("Engenheiro de Software Sênior");
+    expect(ui.es.title).toBe("Ingeniero de Software Sénior");
+  });
+
+  it('writes "backend" and "frontend" as one word', () => {
+    const all = JSON.stringify(cv) + JSON.stringify(ui);
+    expect(all).not.toMatch(/\b(back|front)[ -]end\b/i);
+  });
+
+  it("gives CIAL six named bullets, four in the PDFs, via RyeLabs", () => {
+    const cial = cv.steps.find((s) => s.id === "cial")!;
+    for (const l of LOCALES) {
+      expect(cial.bullets[l]).toHaveLength(6);
+      expect(cial.bullets[l].map((b) => (typeof b === "string" ? null : b.lead))).toEqual([
+        "CIAL360 Task Hub", "DUNS Doctor", "Pulso", l === "en" ? "AI-first workflow" : expect.any(String),
+        "SAT Auth Flow", "Buró Auth Flow",
+      ]);
+    }
+    expect(cial.pdfBullets).toBe(4);
+    expect(cial.via).toBe("RyeLabs");
+    const doctor = cial.bullets.en[1];
+    expect(typeof doctor !== "string" && doctor.text).toContain("hackathon");
+    expect(JSON.stringify(cial.bullets)).not.toMatch(/shipped/i);
+  });
+
+  it("names the office project ChimpCode Office", () => {
+    expect(cv.projects.find((p) => p.id === "chimpcode-office")!.name).toBe("ChimpCode Office");
   });
 });
