@@ -4,6 +4,7 @@ import { cv } from "@/content/cv";
 import { SKILLS } from "@/content/skills";
 import { BRICK_HEX, LOCALES } from "@/content/types";
 import { ui } from "@/content/ui";
+import { bulletText } from "@/lib/bullets";
 
 /** Every piece of free copy where a number could be invented. */
 function copy(): string[] {
@@ -11,7 +12,7 @@ function copy(): string[] {
   for (const l of LOCALES) {
     out.push(cv.summary[l], ui[l].contractNote);
     for (const s of cv.steps) {
-      out.push(...s.bullets[l]);
+      out.push(...s.bullets[l].map(bulletText));
       if (s.note) out.push(s.note[l]);
     }
     for (const p of cv.projects) out.push(p.what[l], p.role[l]);

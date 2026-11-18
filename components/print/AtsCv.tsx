@@ -1,3 +1,4 @@
+import { bulletKey, bulletText, pdfBulletsOf } from "@/lib/bullets";
 import { cv } from "@/content/cv";
 import type { Locale, Step } from "@/content/types";
 import { ui } from "@/content/ui";
@@ -35,8 +36,8 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
             {formatRange(s.start, s.end, locale)} | {s.city[locale]}
           </p>
           <ul>
-            {s.bullets[locale].map((b) => (
-              <li key={b}>{b}</li>
+            {pdfBulletsOf(s, locale).map((b) => (
+              <li key={bulletKey(b)}>{bulletText(b)}</li>
             ))}
           </ul>
           {s.note ? <p>{s.note[locale]}</p> : null}
@@ -78,7 +79,7 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
       <p>{cv.certifications[locale].join("; ")}</p>
 
       <h2>{t.atsSections.languages}</h2>
-      <p>{cv.languages[locale].join("; ")}</p>
+      <p>{cv.languages.map((l) => `${l.name[locale]}: ${l.level[locale]}`).join("; ")}</p>
 
       <h2>{t.atsSections.award}</h2>
       <p>{cv.award[locale]}</p>

@@ -489,11 +489,15 @@ export const cv: Cv = {
     ],
   },
 
-  languages: {
-    en: ["Portuguese: native", "English: C1", "Spanish: B1"],
-    pt: ["Português: nativo", "Inglês: C1", "Espanhol: B1"],
-    es: ["Portugués: nativo", "Inglés: C1", "Español: B1"],
-  },
+  languages: [
+    {
+      code: "pt",
+      name: { en: "Portuguese", pt: "Português", es: "Portugués" },
+      level: { en: "Native", pt: "Nativo", es: "Nativo" },
+    },
+    { code: "en", name: { en: "English", pt: "Inglês", es: "Inglés" }, level: { en: "C1", pt: "C1", es: "C1" } },
+    { code: "es", name: { en: "Spanish", pt: "Espanhol", es: "Español" }, level: { en: "B1", pt: "B1", es: "B1" } },
+  ],
 
   award: {
     en: 'Top Article in Computer Science and Information Technology, "Smart Traffic Based on Traffic Analysis with Arduino", November 2013.',

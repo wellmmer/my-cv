@@ -34,6 +34,34 @@ describe("loadPrivateSteps", () => {
     await expect(loadPrivateSteps(file)).rejects.toThrow(/steps\[0\]\.role is invalid/);
   });
 
+  async function withStep(edit: (s: Record<string, unknown>) => void) {
+    const data = JSON.parse(await readFile(EXAMPLE, "utf8"));
+    edit(data.steps[0]);
+    const dir = await mkdtemp(path.join(tmpdir(), "cv-"));
+    const file = path.join(dir, "step.json");
+    await writeFile(file, JSON.stringify(data));
+    return loadPrivateSteps(file);
+  }
+
+  it("accepts plain string bullets and bullets with a lead", async () => {
+    const steps = await withStep((s) => {
+      s.bullets = { en: ["plain", { lead: "A", text: "b" }], pt: ["x", "y"], es: ["x", "y"] };
+    });
+    expect(steps[0].bullets.en[1]).toEqual({ lead: "A", text: "b" });
+  });
+
+  it("rejects a bullet with empty text", async () => {
+    await expect(
+      withStep((s) => {
+        s.bullets = { en: [{ lead: "A", text: "" }], pt: ["x"], es: ["x"] };
+      }),
+    ).rejects.toThrow(/steps\[0\]\.bullets is invalid/);
+  });
+
+  it("rejects pdfBullets of 0", async () => {
+    await expect(withStep((s) => (s.pdfBullets = 0))).rejects.toThrow(/steps\[0\]\.pdfBullets is invalid/);
+  });
+
   it("rejects a file that is not JSON", async () => {
     const dir = await mkdtemp(path.join(tmpdir(), "cv-"));
     const file = path.join(dir, "bad.json");

@@ -11,8 +11,9 @@ const YM = /^\d{4}-(0[1-9]|1[0-2])$/;
 const isObj = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const isStr = (x: unknown): x is string => typeof x === "string" && x.trim().length > 0;
 const isL = (x: unknown) => isObj(x) && LOCALES.every((l) => isStr(x[l]));
+const isBullet = (x: unknown) => isStr(x) || (isObj(x) && isStr(x.lead) && isStr(x.text));
 const isLList = (x: unknown) =>
-  isObj(x) && LOCALES.every((l) => Array.isArray(x[l]) && (x[l] as unknown[]).length > 0 && (x[l] as unknown[]).every(isStr));
+  isObj(x) && LOCALES.every((l) => Array.isArray(x[l]) && (x[l] as unknown[]).length > 0 && (x[l] as unknown[]).every(isBullet));
 
 const CHECKS: Record<string, (v: unknown) => boolean> = {
   n: (v) => Number.isInteger(v) && (v as number) > 0,
@@ -33,6 +34,7 @@ const OPTIONAL: Record<string, (v: unknown) => boolean> = {
   product: isStr,
   client: isStr,
   note: isL,
+  pdfBullets: (v) => Number.isInteger(v) && (v as number) > 0,
 };
 
 /** Returns the first invalid field name of a step, or null. */

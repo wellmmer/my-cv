@@ -34,8 +34,10 @@ export function Appendix({ locale }: { locale: Locale }) {
         <div>
           <h3>{t.atsSections.languages}</h3>
           <ul>
-            {cv.languages[locale].map((l) => (
-              <li key={l}>{l}</li>
+            {cv.languages.map((l) => (
+              <li key={l.code}>
+                {l.name[locale]}: {l.level[locale]}
+              </li>
             ))}
           </ul>
           <h3 className={styles.award}>{t.atsSections.award}</h3>

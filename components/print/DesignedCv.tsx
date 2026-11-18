@@ -1,3 +1,4 @@
+import { bulletKey, bulletParts, pdfBulletsOf } from "@/lib/bullets";
 import { Brick } from "@/components/brick/Brick";
 import { Tower } from "@/components/brick/Tower";
 import { cv } from "@/content/cv";
@@ -55,9 +56,14 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
                 {s.city[locale]}
               </p>
               <ul>
-                {s.bullets[locale].map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
+                {pdfBulletsOf(s, locale).map((b) => {
+                  const { lead, text } = bulletParts(b);
+                  return (
+                    <li key={bulletKey(b)}>
+                      {lead ? <b>{lead}:</b> : null} {text}
+                    </li>
+                  );
+                })}
               </ul>
               {s.note ? <p className={styles.small}>{s.note[locale]}</p> : null}
             </div>
@@ -108,7 +114,7 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
         </div>
         <div>
           <h2>{t.atsSections.languages}</h2>
-          <p className={styles.small}>{cv.languages[locale].join(" · ")}</p>
+          <p className={styles.small}>{cv.languages.map((l) => `${l.name[locale]}: ${l.level[locale]}`).join(" · ")}</p>
           <h2 className={styles.gap}>{t.atsSections.award}</h2>
           <p className={styles.small}>{cv.award[locale]}</p>
         </div>

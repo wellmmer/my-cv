@@ -1,3 +1,4 @@
+import { bulletKey, bulletParts } from "@/lib/bullets";
 import { Brick } from "@/components/brick/Brick";
 import { Tower } from "@/components/brick/Tower";
 import { TowerMotion } from "@/components/TowerMotion";
@@ -61,9 +62,14 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                   </div>
                 </header>
                 <ul className={styles.bullets}>
-                  {s.bullets[locale].map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
+                  {s.bullets[locale].map((b) => {
+                    const { lead, text } = bulletParts(b);
+                    return (
+                      <li key={bulletKey(b)}>
+                        {lead ? <b>{lead}:</b> : null} {text}
+                      </li>
+                    );
+                  })}
                 </ul>
                 {s.note ? <p className={styles.note}>{s.note[locale]}</p> : null}
                 {fresh[i].length ? (
