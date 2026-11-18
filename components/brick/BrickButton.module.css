@@ -60,11 +60,11 @@
 }
 
 .email {
-  --band: #a52714;
-  --stud: #d93025;
-  --stud-side: #a52714;
-  background: #d93025;
-  color: #fff;
+  --band: #c4a40d;
+  --stud: #f7d117;
+  --stud-side: #c4a40d;
+  background: var(--yellow);
+  color: #111;
 }
 
 .linkedin {
