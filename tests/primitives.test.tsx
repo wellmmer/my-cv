@@ -7,7 +7,7 @@ import { ICON_NAMES, Icon } from "@/components/icons";
 
 describe("primitives", () => {
   it("renders every icon as a hidden svg", () => {
-    expect(ICON_NAMES.length).toBe(16);
+    expect(ICON_NAMES.length).toBe(18);
     for (const name of ICON_NAMES) {
       const html = renderToStaticMarkup(<Icon name={name} />);
       expect(html, name).toMatch(/^<svg[^>]*aria-hidden="true"/);

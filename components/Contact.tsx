@@ -1,5 +1,6 @@
 import { Brick } from "@/components/brick/Brick";
 import { BrickButton } from "@/components/brick/BrickButton";
+import { Icon } from "@/components/icons";
 import { BRICK_HEX, type Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { CONTACT, cvPdfPath, mailtoUrl, whatsappUrl } from "@/lib/contact";
@@ -28,9 +29,14 @@ export function Contact({ locale }: { locale: Locale }) {
         </BrickButton>
       </div>
       <p className={styles.direct} data-direct>
-        <a href={mailtoUrl(locale)}>{CONTACT.email}</a>
-        <span aria-hidden="true"> — </span>
-        <a href={`tel:${CONTACT.phone.replace(/[^+\d]/g, "")}`}>{CONTACT.phone}</a>
+        <a href={mailtoUrl(locale)}>
+          <Icon name="mail" size={20} />
+          {CONTACT.email}
+        </a>
+        <a href={`tel:${CONTACT.phone.replace(/[^+\d]/g, "")}`}>
+          <Icon name="phone" size={20} />
+          {CONTACT.phone}
+        </a>
       </p>
       <p className={styles.note}>
           <Brick color={BRICK_HEX.red} U={11} />

@@ -19,14 +19,23 @@
 }
 
 .direct {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
   margin-top: 28px;
   font-size: 20px;
-  overflow-wrap: anywhere;
 }
 
 .direct a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   text-underline-offset: 4px;
   white-space: nowrap;
+}
+
+.direct svg {
+  flex: none;
 }
 
 .note {

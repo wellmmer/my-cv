@@ -23,12 +23,17 @@ test.describe("sections", () => {
     await expect(page.locator("#appendix [data-languages] svg")).toHaveCount(3);
   });
 
-  test("contact: five icon bricks and the em dash line", async ({ page }) => {
+  test("contact: five icon bricks, icons before email and phone", async ({ page }) => {
     await page.goto("/en");
     const links = page.locator("#contact [data-variant]");
     await expect(links).toHaveCount(5);
     for (const l of await links.all()) await expect(l.locator("svg").last()).toBeVisible();
-    await expect(page.locator("#contact [data-direct]")).toHaveText(/@.+ — \+55/);
+    const direct = page.locator("#contact [data-direct]");
+    await expect(direct).not.toContainText("—");
+    for (const a of await direct.locator("a").all()) {
+      const firstIsIcon = await a.evaluate((e) => e.firstElementChild?.tagName.toLowerCase() === "svg");
+      expect(firstIsIcon).toBe(true);
+    }
   });
 
   test("contact row fits at 320px", async ({ page }) => {
