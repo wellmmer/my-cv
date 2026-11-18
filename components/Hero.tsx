@@ -88,10 +88,23 @@ export function Hero({ locale }: { locale: Locale }) {
         </span>
       </BrickCard>
 
-      <ol className={styles.strip}>
+      <ol className={styles.strip} data-strip>
         {cv.steps.map((s) => (
           <li key={s.n} className={s.n === newest.n ? styles.on : undefined}>
-            <a href={`#step-${s.n}`}>
+            <a
+              href={`#step-${s.n}`}
+              data-color={s.brick}
+              data-brick={s.brick === "black" ? "black" : undefined}
+              className={styles[`s_${s.brick}`]}
+            >
+              <svg className={styles.studs} viewBox="0 0 44 12" width="44" height="12" aria-hidden="true" focusable="false">
+                {[11, 33].map((x) => (
+                  <g key={x} transform={`translate(${x} 0)`}>
+                    <path d="M-7 4 V8 A7 3.5 0 0 0 7 8 V4 Z" fill="var(--band)" stroke="#111" strokeWidth={2} />
+                    <ellipse cx={0} cy={4} rx={7} ry={3.5} fill="var(--brick)" stroke="#111" strokeWidth={2} />
+                  </g>
+                ))}
+              </svg>
               <b>{s.n}</b>
               <span>{s.start.slice(0, 4)}</span>
             </a>

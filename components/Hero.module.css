@@ -131,26 +131,48 @@
   grid-area: strip;
   display: grid;
   grid-template-columns: repeat(10, minmax(76px, 1fr));
-  gap: 8px;
+  gap: 10px;
   list-style: none;
   overflow-x: auto;
-  padding: 4px 2px 6px;
+  padding: 14px 2px 8px;
 }
 
+/* Each year is a flat brick in its step colour: keyline, darker bottom band, two studs. */
 .strip a {
+  --brick: var(--card);
+  --band: var(--band-white);
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: var(--soft);
+  padding: 9px 10px 12px;
+  border: 2.4px solid #111;
+  border-radius: 8px;
+  background: var(--brick);
+  color: #fff;
   text-decoration: none;
-  border: 3px solid transparent;
+  box-shadow: inset 0 -5px 0 var(--band);
+  transition: translate 140ms ease-out;
 }
 
-.strip a:hover {
-  border-color: var(--ink);
+.strip a:hover,
+.strip a:focus-visible {
+  translate: 0 -3px;
 }
+
+.studs {
+  position: absolute;
+  top: -11px;
+  left: 8px;
+  overflow: visible;
+}
+
+.strip .s_red { --brick: var(--red); --band: #a60115; }
+.strip .s_blue { --brick: var(--blue); --band: #003f86; }
+.strip .s_black { --brick: var(--black); --band: #111111; }
+.strip .s_green { --brick: var(--green); --band: #005c1e; }
+.strip .s_yellow { --brick: var(--yellow); --band: #c4a40d; color: #111; }
+.strip .s_grey { --brick: var(--grey); --band: #a9a9a6; color: #111; }
 
 .strip b {
   font-size: 22px;
@@ -159,11 +181,20 @@
 
 .strip span {
   font-size: 13px;
+  font-weight: 700;
 }
 
+/* The newest step sits raised, like the lifted top brick of the tower. */
 .on a {
-  background: var(--card);
-  border-color: var(--ink);
+  translate: 0 -5px;
+  outline: 3px solid var(--edge);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip a {
+    transition: none;
+  }
 }
 
 @media (max-width: 1180px) {

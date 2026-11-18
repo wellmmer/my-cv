@@ -53,3 +53,12 @@ test("the hero summary does not repeat the title line", async ({ page }) => {
   const text = await page.locator("[data-hero-copy] p").nth(1).textContent();
   expect(text?.startsWith("Senior Software Engineer")).toBe(false);
 });
+
+test("the year strip is ten bricks in their step colours, with studs", async ({ page }) => {
+  await page.goto("/en");
+  const links = page.locator("[data-strip] a");
+  await expect(links).toHaveCount(10);
+  const colors = await links.evaluateAll((as) => as.map((a) => a.getAttribute("data-color")));
+  expect(colors).toEqual(["blue", "yellow", "black", "grey", "red", "blue", "yellow", "black", "blue", "red"]);
+  for (const a of await links.all()) await expect(a.locator("svg")).toHaveCount(1);
+});
