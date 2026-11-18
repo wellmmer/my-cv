@@ -51,3 +51,6 @@ playwright-report/
 # plan workspace
 .superpowers/
 .vitest/
+
+# secret terms for the leak guard (never commit)
+leak-terms.local.json

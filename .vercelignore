@@ -4,3 +4,4 @@ private/
 .vitest/
 test-results/
 playwright-report/
+leak-terms.local.json

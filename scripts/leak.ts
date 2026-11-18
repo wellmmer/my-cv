@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { findLeaks } from "./leak-patterns";
+import { findLeaks, loadTerms, type LeakTerms } from "./leak-patterns";
 import { pdfText } from "./pdf-text";
 
 const SKIP = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".ico", ".woff", ".woff2", ".ttf", ".avif"]);
@@ -21,13 +21,13 @@ async function walk(dir: string, skipDir?: (d: string) => boolean): Promise<stri
   return out;
 }
 
-export async function scanPaths(paths: string[]): Promise<{ path: string; hits: string[] }[]> {
+export async function scanPaths(paths: string[], terms: LeakTerms = loadTerms()): Promise<{ path: string; hits: string[] }[]> {
   const results: { path: string; hits: string[] }[] = [];
   for (const p of paths) {
     const ext = path.extname(p).toLowerCase();
     if (SKIP.has(ext) || !existsSync(p)) continue;
     const text = ext === ".pdf" ? (await pdfText(p)).text : await readFile(p, "utf8");
-    const hits = findLeaks(text);
+    const hits = findLeaks(text, terms);
     if (hits.length) results.push({ path: p, hits });
   }
   return results;

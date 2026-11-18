@@ -2,20 +2,46 @@
 //   npm run pdf          -> six public PDFs in public/cv/
 //   npm run pdf:private  -> three designed PDFs with private steps in private/ (gitignored)
 import { spawn, type ChildProcess } from "node:child_process";
-import { mkdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { mkdir, unlink } from "node:fs/promises";
 import { chromium } from "@playwright/test";
-import { loadPrivateSteps } from "../content/private";
+import { PRIVATE_FILE, loadPrivateSteps } from "../content/private";
 import { LOCALES } from "../content/types";
 import { cvPdfPath } from "../lib/contact";
+import { loadTerms } from "./leak-patterns";
+import { portInUse, publicPdfProblems } from "./pdf-guard";
 import { pdfText } from "./pdf-text";
 
 const PORT = 3999;
 const BASE = `http://localhost:${PORT}`;
 const isPrivate = process.argv.includes("--private");
 
-async function waitForServer(url: string, ms: number) {
+let server: ChildProcess | undefined;
+
+function stopServer() {
+  try {
+    if (server?.pid) process.kill(-server.pid);
+  } catch {
+    // already gone
+  }
+}
+
+// Ctrl+C must not leave a server (possibly a private one) running on the port.
+for (const sig of ["SIGINT", "SIGTERM"] as const) {
+  process.on(sig, () => {
+    stopServer();
+    process.exit(130);
+  });
+}
+
+async function waitForServer(url: string, ms: number, child: ChildProcess) {
+  let exited: number | null = null;
+  child.once("exit", (code) => {
+    exited = code ?? 1;
+  });
   const until = Date.now() + ms;
   while (Date.now() < until) {
+    if (exited !== null) throw new Error(`next dev exited early (code ${exited})`);
     try {
       if ((await fetch(url)).ok) return;
     } catch {
@@ -27,29 +53,30 @@ async function waitForServer(url: string, ms: number) {
 }
 
 async function main() {
-  let privateCompany: string | undefined;
+  const terms = loadTerms();
+  let privateCompanies: string[] = [];
   if (isPrivate) {
     // Fails with the loader's message when the file is missing or malformed.
     const steps = await loadPrivateSteps();
-    if (!steps.length) throw new Error("no private steps: set CV_PRIVATE=1 and fill content/private.local.json");
-    privateCompany = steps[0].company;
+    if (!steps.length) throw new Error(`no private steps: set CV_PRIVATE=1 and fill ${PRIVATE_FILE}`);
+    privateCompanies = steps.map((s) => s.company);
+  } else if (existsSync(PRIVATE_FILE)) {
+    // Public PDFs are checked against the private companies too.
+    privateCompanies = (await loadPrivateSteps(PRIVATE_FILE)).map((s) => s.company);
   }
 
-  const server: ChildProcess = spawn("npx", ["next", "dev", "-p", String(PORT)], {
+  if (await portInUse(PORT)) {
+    throw new Error(`port ${PORT} is already in use; stop that server first (it may be a private one)`);
+  }
+
+  server = spawn("npx", ["next", "dev", "-p", String(PORT)], {
     env: { ...process.env, CV_PRIVATE: isPrivate ? "1" : "" },
     stdio: "ignore",
     detached: true,
   });
-  const stop = () => {
-    try {
-      if (server.pid) process.kill(-server.pid);
-    } catch {
-      // already gone
-    }
-  };
 
   try {
-    await waitForServer(`${BASE}/en/cv/print`, 90_000);
+    await waitForServer(`${BASE}/en/cv/print`, 90_000, server);
     const browser = await chromium.launch({ channel: "chrome" });
     const page = await browser.newPage();
     const jobs = LOCALES.flatMap((locale) =>
@@ -66,18 +93,27 @@ async function main() {
       await page.evaluate(() => document.fonts.ready);
       await page.pdf({ path: job.out, format: "A4", printBackground: true, preferCSSPageSize: true });
       const { pages, text } = await pdfText(job.out);
-      if (privateCompany && !text.includes(privateCompany)) {
-        throw new Error(`${job.out} does not contain the private step; is CV_PRIVATE reaching the server?`);
+      if (isPrivate) {
+        if (!text.includes(privateCompanies[0])) {
+          throw new Error(`${job.out} does not contain the private step; is CV_PRIVATE reaching the server?`);
+        }
+      } else {
+        const problems = publicPdfProblems(text, privateCompanies, terms);
+        if (problems.length) {
+          await unlink(job.out);
+          throw new Error(`${job.out} removed: ${problems.join(", ")}`);
+        }
       }
       console.log(`${job.out} (${pages} page${pages === 1 ? "" : "s"})`);
     }
     await browser.close();
   } finally {
-    stop();
+    stopServer();
   }
 }
 
 main().catch((e) => {
+  stopServer();
   console.error(e instanceof Error ? e.message : e);
   process.exit(1);
 });

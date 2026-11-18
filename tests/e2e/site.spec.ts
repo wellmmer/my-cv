@@ -82,8 +82,24 @@ test("full tower with reduced motion", async ({ browser }) => {
 });
 
 test("language switch keeps the section", async ({ page }) => {
-  await page.goto("/en#builds");
-  await page.locator('ul[aria-label] a[hreflang="pt"]').click();
+  await page.goto("/en#builds", { waitUntil: "networkidle" }); // hydrated
+  // dispatchEvent: a real click does not scroll; Playwright's click would scroll the page first.
+  await page.locator('ul[aria-label] a[hreflang="pt"]').dispatchEvent("click");
   await page.waitForURL(/\/pt#builds$/);
   expect(new URL(page.url()).hash).toBe("#builds");
+});
+
+test("language switch keeps the section in view after scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/en#steps", { waitUntil: "networkidle" });
+  await page.locator("#contact").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(200);
+  // dispatchEvent: a real click does not scroll; Playwright's click would scroll the page first.
+  await page.locator('ul[aria-label] a[hreflang="pt"]').dispatchEvent("click");
+  await page.waitForURL(/\/pt#contact$/);
+  await page.goto("/en", { waitUntil: "networkidle" });
+  await page.locator("#builds").evaluate((el) => el.scrollIntoView({ block: "start", behavior: "instant" }));
+  await page.waitForTimeout(200);
+  await page.locator('ul[aria-label] a[hreflang="es"]').dispatchEvent("click");
+  await page.waitForURL(/\/es#builds$/);
 });

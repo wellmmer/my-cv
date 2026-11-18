@@ -37,7 +37,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   return (
-    <html lang={locale} className={rubik.variable}>
+    <html lang={locale} className={rubik.variable} data-scroll-behavior="smooth">
       <body>{children}</body>
     </html>
   );
