@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   background: var(--card);
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   border-radius: 18px;
   overflow: hidden;
 }
@@ -42,7 +42,7 @@
 }
 
 .shot {
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 3px solid var(--edge);
   background: var(--soft);
 }
 
@@ -75,7 +75,7 @@
 .tag {
   display: inline-block;
   padding: 2px 8px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--edge);
   border-radius: 6px;
   font-size: 13px;
   font-weight: 700;

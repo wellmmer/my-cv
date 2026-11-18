@@ -3,12 +3,15 @@
   margin: 11mm 13mm;
 }
 
-:global(html),
-:global(body) {
+/* Scoped with :has so this never reaches the main page (CSS chunks can be shared). */
+:global(html):has(.page),
+:global(body):has(.page) {
   background: #fff !important;
+  color-scheme: light;
 }
 
 .page {
+  --ink: #111111;
   font-family: var(--font-rubik), Arial, sans-serif;
   font-weight: 500;
   font-size: 9pt;
@@ -66,7 +69,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding-bottom: 1mm;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 2px solid var(--edge);
   margin-bottom: 1.5mm;
 }
 

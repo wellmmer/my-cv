@@ -89,7 +89,7 @@
   align-self: center;
   position: relative;
   background: var(--card);
-  border: 3px solid var(--ink);
+  border: 3px solid var(--edge);
   border-radius: 18px;
   padding: 20px 22px 44px;
 }

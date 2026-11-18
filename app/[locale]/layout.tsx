@@ -6,6 +6,7 @@ import { LOCALES } from "@/content/types";
 import { ui } from "@/content/ui";
 import { isLocale } from "@/lib/locale";
 import { SITE_URL } from "@/lib/site";
+import { THEME_SCRIPT } from "@/lib/theme";
 import "../globals.css";
 
 const rubik = Rubik({ subsets: ["latin"], weight: ["500", "700", "900"], variable: "--font-rubik" });
@@ -36,7 +37,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   return (
-    <html lang={locale} className={rubik.variable} data-scroll-behavior="smooth">
+    <html lang={locale} className={rubik.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>{children}</body>
     </html>
   );

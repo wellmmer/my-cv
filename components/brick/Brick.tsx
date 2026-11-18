@@ -1,3 +1,4 @@
+import { BRICK_HEX } from "@/content/types";
 import { brickShapes } from "@/lib/iso";
 
 export interface BrickProps {
@@ -15,7 +16,7 @@ export interface BrickProps {
 export function BrickShape({ U, z0, w, d, h, color, ox, oy }: BrickProps) {
   const { polygons, studs } = brickShapes(U, z0, w, d, h, color, ox, oy);
   return (
-    <>
+    <g data-brick={color === BRICK_HEX.black ? "black" : undefined}>
       {polygons.map((p, i) => (
         <polygon key={i} points={p.points} fill={p.fill} stroke="#111" strokeWidth={2.4} strokeLinejoin="round" />
       ))}
@@ -25,7 +26,7 @@ export function BrickShape({ U, z0, w, d, h, color, ox, oy }: BrickProps) {
           <ellipse cx={s.top.cx} cy={s.top.cy} rx={s.top.rx} ry={s.top.ry} fill={s.topFill} stroke="#111" strokeWidth={2} />
         </g>
       ))}
-    </>
+    </g>
   );
 }
 

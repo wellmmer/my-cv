@@ -5,7 +5,7 @@
   min-height: 48px;
   margin-top: 10px;
   padding: 12px 18px 15px;
-  border: 2.4px solid var(--ink);
+  border: 2.4px solid var(--edge);
   border-radius: 8px;
   font-weight: 700;
   font-size: 16px;
@@ -24,7 +24,7 @@
 }
 
 .button:focus-visible {
-  outline: 3px solid var(--ink);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -37,10 +37,10 @@
 }
 
 .white {
-  --band: #cccccc;
-  --stud: #ffffff;
-  --stud-side: #cccccc;
-  background: #fff;
+  --band: var(--band-white);
+  --stud: var(--card);
+  --stud-side: var(--band-white);
+  background: var(--card);
   color: var(--ink);
 }
 
