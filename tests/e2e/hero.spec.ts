@@ -62,3 +62,15 @@ test("the year strip is ten bricks in their step colours, with studs", async ({ 
   expect(colors).toEqual(["blue", "yellow", "black", "grey", "red", "blue", "yellow", "black", "blue", "red"]);
   for (const a of await links.all()) await expect(a.locator("svg")).toHaveCount(1);
 });
+
+test("the current year brick is not clipped and has no outline", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/en");
+  const strip = page.locator("[data-strip]");
+  const last = page.locator("[data-strip] a").last();
+  expect(await last.evaluate((a) => getComputedStyle(a).outlineStyle)).toBe("none");
+  await expect(last).toHaveAttribute("aria-current", "step");
+  const s = (await strip.boundingBox())!;
+  const l = (await last.boundingBox())!;
+  expect(l.x + l.width).toBeLessThanOrEqual(s.x + s.width);
+});

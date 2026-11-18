@@ -95,6 +95,7 @@ export function Hero({ locale }: { locale: Locale }) {
               href={`#step-${s.n}`}
               data-color={s.brick}
               data-brick={s.brick === "black" ? "black" : undefined}
+              aria-current={s.n === newest.n ? "step" : undefined}
               className={styles[`s_${s.brick}`]}
             >
               <svg className={styles.studs} viewBox="0 0 44 12" width="44" height="12" aria-hidden="true" focusable="false">

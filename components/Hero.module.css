@@ -134,7 +134,7 @@
   gap: 10px;
   list-style: none;
   overflow-x: auto;
-  padding: 14px 2px 8px;
+  padding: 22px 2px 8px;
 }
 
 /* Each year is a flat brick in its step colour: keyline, darker bottom band, two studs. */
@@ -186,9 +186,7 @@
 
 /* The newest step sits raised, like the lifted top brick of the tower. */
 .on a {
-  translate: 0 -5px;
-  outline: 3px solid var(--edge);
-  outline-offset: 3px;
+  translate: 0 -6px;
 }
 
 @media (prefers-reduced-motion: reduce) {
