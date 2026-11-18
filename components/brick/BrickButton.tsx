@@ -1,9 +1,13 @@
 import type { ReactNode } from "react";
+import { Icon, type IconName } from "@/components/icons";
 import styles from "@/components/brick/BrickButton.module.css";
+
+export type BrickVariant = "red" | "white" | "whatsapp" | "email" | "linkedin" | "github" | "pdf";
 
 interface BrickButtonProps {
   href: string;
-  variant: "red" | "white";
+  variant: BrickVariant;
+  icon?: IconName;
   external?: boolean;
   download?: boolean;
   children: ReactNode;
@@ -12,13 +16,14 @@ interface BrickButtonProps {
 }
 
 /** A link drawn as a flat brick: ink keyline, darker bottom band, studs on top. */
-export function BrickButton({ href, variant, external, download, children, label }: BrickButtonProps) {
+export function BrickButton({ href, variant, icon, external, download, children, label }: BrickButtonProps) {
   const text = label ?? (typeof children === "string" ? children : "");
   const studs = text.length > 12 ? 4 : 2;
   return (
     <a
       href={href}
-      className={`${styles.button} ${variant === "red" ? styles.red : styles.white}`}
+      data-variant={variant}
+      className={`${styles.button} ${styles[variant]}`}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       {...(download ? { download: "" } : {})}
     >
@@ -30,7 +35,10 @@ export function BrickButton({ href, variant, external, download, children, label
           </g>
         ))}
       </svg>
-      <span>{children}</span>
+      <span className={styles.label}>
+        {icon ? <Icon name={icon} size={19} /> : null}
+        {children}
+      </span>
     </a>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { THEME_KEY, type Theme } from "@/lib/theme";
 import styles from "@/components/ThemeToggle.module.css";
 
@@ -10,29 +10,32 @@ function current(): Theme {
   return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+const CHANGE = "themechange";
+
+function subscribe(onChange: () => void) {
+  const mq = matchMedia("(prefers-color-scheme: dark)");
+  mq.addEventListener("change", onChange);
+  window.addEventListener(CHANGE, onChange);
+  return () => {
+    mq.removeEventListener("change", onChange);
+    window.removeEventListener(CHANGE, onChange);
+  };
+}
+
+function flip() {
+  const next: Theme = current() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try {
+    localStorage.setItem(THEME_KEY, next);
+  } catch {
+    // storage blocked: the choice lasts for this page view
+  }
+  window.dispatchEvent(new Event(CHANGE));
+}
+
 /** A two-stud brick switch: light or dark. A manual pick is remembered when storage allows. */
 export function ThemeToggle({ labels }: { labels: { toDark: string; toLight: string } }) {
-  const [theme, setTheme] = useState<Theme>("light");
-
-  useEffect(() => {
-    setTheme(current());
-    const mq = matchMedia("(prefers-color-scheme: dark)");
-    const follow = () => setTheme(current());
-    mq.addEventListener("change", follow);
-    return () => mq.removeEventListener("change", follow);
-  }, []);
-
-  function flip() {
-    const next: Theme = current() === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem(THEME_KEY, next);
-    } catch {
-      // storage blocked: the choice lasts for this page view
-    }
-    setTheme(next);
-  }
-
+  const theme = useSyncExternalStore<Theme>(subscribe, current, () => "light");
   const dark = theme === "dark";
   return (
     <button

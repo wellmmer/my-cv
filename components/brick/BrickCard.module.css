@@ -1,0 +1,45 @@
+.card {
+  --brick: var(--card);
+  --brick-dark: var(--band-white);
+  position: relative;
+  margin-top: 14px;
+  padding: 26px 24px 28px;
+  background: var(--card);
+  color: var(--ink);
+  border: 3px solid var(--edge);
+  border-top: 12px solid var(--brick);
+  border-radius: 12px;
+  box-shadow: inset 0 -7px 0 var(--brick-dark);
+  min-width: 0;
+}
+
+/* Studs sit on the top band, spread evenly. */
+.studs {
+  position: absolute;
+  top: -27px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.red { --brick: var(--red); --brick-dark: #a60115; }
+.blue { --brick: var(--blue); --brick-dark: #003f86; }
+.yellow { --brick: var(--yellow); --brick-dark: #c4a40d; }
+.black { --brick: var(--black); --brick-dark: #111111; }
+.grey { --brick: var(--grey); --brick-dark: #a9a9a6; }
+.green { --brick: var(--green); --brick-dark: #005c1e; }
+.white { --brick: var(--card); --brick-dark: var(--band-white); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .black {
+    --brick: #4a4f57;
+    --brick-dark: #2b2f35;
+  }
+}
+
+:root[data-theme="dark"] .black {
+  --brick: #4a4f57;
+  --brick-dark: #2b2f35;
+}

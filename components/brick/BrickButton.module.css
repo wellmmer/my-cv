@@ -44,6 +44,53 @@
   color: var(--ink);
 }
 
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* Brand bricks: brand colour body, text colour picked for AA contrast. */
+.whatsapp {
+  --band: #1a9e4b;
+  --stud: #25d366;
+  --stud-side: #1a9e4b;
+  background: #25d366;
+  color: #111;
+}
+
+.email {
+  --band: #a52714;
+  --stud: #d93025;
+  --stud-side: #a52714;
+  background: #d93025;
+  color: #fff;
+}
+
+.linkedin {
+  --band: #074a8c;
+  --stud: #0a66c2;
+  --stud-side: #074a8c;
+  background: #0a66c2;
+  color: #fff;
+}
+
+.github {
+  --band: #000;
+  --stud: #333;
+  --stud-side: #000;
+  background: #181717;
+  color: #fff;
+}
+
+.pdf {
+  --band: #a60115;
+  --stud: #d0021b;
+  --stud-side: #a60115;
+  background: var(--red);
+  color: #fff;
+}
+
 .studs {
   position: absolute;
   top: -11px;
