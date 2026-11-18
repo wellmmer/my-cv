@@ -11,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "leak": "tsx scripts/leak.ts",
     "prepare": "simple-git-hooks",
-    "shots": "tsx scripts/shots.ts"
+    "shots": "tsx scripts/shots.ts",
+    "pdf": "tsx scripts/pdf.ts",
+    "pdf:private": "CV_PRIVATE=1 tsx scripts/pdf.ts --private"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
