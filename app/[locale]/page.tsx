@@ -6,7 +6,6 @@ import { Hero } from "@/components/Hero";
 import { Parts } from "@/components/Parts";
 import { Steps } from "@/components/Steps";
 import { TopBar } from "@/components/TopBar";
-import { yearsOfExperience } from "@/lib/dates";
 import { isLocale } from "@/lib/locale";
 
 export default async function Home({ params }: PageProps<"/[locale]">) {
@@ -17,7 +16,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
     <>
       <TopBar locale={locale} />
       <main id="main">
-        <Hero locale={locale} years={yearsOfExperience(today)} />
+        <Hero locale={locale} />
         <Steps locale={locale} today={today} />
         <Builds locale={locale} />
         <Parts locale={locale} today={today} />

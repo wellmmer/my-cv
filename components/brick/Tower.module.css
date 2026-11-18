@@ -22,3 +22,22 @@
 .arrow path:last-child {
   fill: var(--ink);
 }
+
+.link {
+  text-decoration: none;
+}
+
+.link text {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link:hover text,
+.link:focus-visible text {
+  fill: var(--blue);
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}

@@ -19,7 +19,7 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
       </h2>
       <div className={styles.layout}>
         <div data-tower="sticky" className={styles.sticky}>
-          <Tower steps={tower} U={24} labels ariaLabel={t.towerLabel} />
+          <Tower steps={tower} U={24} labels ariaLabel={t.towerLabel} labelHref={(n) => `#step-${n}`} />
         </div>
         <ol className={styles.list}>
           {cv.steps.map((s) => (

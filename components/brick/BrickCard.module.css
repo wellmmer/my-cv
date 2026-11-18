@@ -16,7 +16,7 @@
 /* Studs sit on the top band, spread evenly. */
 .studs {
   position: absolute;
-  top: -27px;
+  top: -22px;
   left: 18px;
   right: 18px;
   display: flex;

@@ -17,12 +17,14 @@ interface TowerProps {
   labels?: boolean;
   ariaLabel?: string;
   className?: string;
+  /** When set, each label links to this href (e.g. its step section). */
+  labelHref?: (n: number) => string;
 }
 
 const ARROW_SPACE = 44;
 const LABEL_SPACE = 190;
 
-export function Tower({ steps, U, liftTop = false, labels = false, ariaLabel, className }: TowerProps) {
+export function Tower({ steps, U, liftTop = false, labels = false, ariaLabel, className, labelHref }: TowerProps) {
   const count = steps.length;
   const lift = liftTop ? LIFT : 0;
   const box = towerBox(count, U, lift);
@@ -38,7 +40,7 @@ export function Tower({ steps, U, liftTop = false, labels = false, ariaLabel, cl
     <svg
       viewBox={`0 0 ${width.toFixed(1)} ${box.height.toFixed(1)}`}
       className={[styles.tower, className].filter(Boolean).join(" ")}
-      role={ariaLabel ? "img" : undefined}
+      role={ariaLabel ? (labelHref ? "group" : "img") : undefined}
       aria-label={ariaLabel}
       aria-hidden={ariaLabel ? undefined : true}
       focusable="false"
@@ -51,9 +53,17 @@ export function Tower({ steps, U, liftTop = false, labels = false, ariaLabel, cl
           <g key={s.n} data-step={s.n}>
             <BrickShape U={U} z0={z0} w={w} d={d} h={h} color={s.color} ox={ox} oy={oy} />
             {labels && s.label ? (
-              <text x={lx + 22} y={ly + 6} className={isTop ? styles.labelNow : styles.label}>
-                {s.n} {s.label}
-              </text>
+              labelHref ? (
+                <a href={labelHref(s.n)} className={styles.link}>
+                  <text x={lx + 22} y={ly + 6} className={isTop ? styles.labelNow : styles.label}>
+                    {s.n} {s.label}
+                  </text>
+                </a>
+              ) : (
+                <text x={lx + 22} y={ly + 6} className={isTop ? styles.labelNow : styles.label}>
+                  {s.n} {s.label}
+                </text>
+              )
             ) : null}
           </g>
         );

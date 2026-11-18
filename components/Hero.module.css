@@ -1,16 +1,16 @@
 .hero {
   display: grid;
-  grid-template-columns: minmax(300px, 440px) minmax(0, 1fr) minmax(260px, 360px);
+  grid-template-columns: minmax(320px, 470px) minmax(0, 1fr) minmax(260px, 350px);
   grid-template-areas:
     "copy build box"
     "strip strip strip";
   grid-template-rows: 1fr auto;
-  column-gap: 32px;
-  row-gap: 18px;
+  column-gap: 40px;
+  row-gap: 32px;
   max-width: var(--max);
   min-height: calc(100svh - 72px);
   margin: 0 auto;
-  padding: 12px var(--gutter) 20px;
+  padding: 36px var(--gutter) 28px;
 }
 
 .copy {
@@ -19,7 +19,8 @@
 }
 
 .name {
-  font-size: clamp(52px, 6vw, 78px);
+  margin-top: 26px;
+  font-size: clamp(52px, 6vw, 80px);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.92;
@@ -29,55 +30,50 @@
   display: block;
 }
 
+.title {
+  margin-top: 14px;
+  font-size: clamp(20px, 1.7vw, 24px);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
 .summary {
-  margin-top: 22px;
-  font-size: clamp(18px, 1.5vw, 21px);
-  line-height: 1.4;
-  max-width: 34ch;
+  margin-top: 14px;
+  font-size: clamp(17px, 1.35vw, 19px);
+  line-height: 1.55;
+  max-width: 40ch;
 }
 
 .ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
+  gap: 4px 12px;
+  margin-top: 26px;
 }
 
 .plain {
   display: inline-block;
-  margin-top: 14px;
+  margin-top: 18px;
   font-size: 15px;
   text-underline-offset: 4px;
 }
 
 .note {
-  margin-top: 18px;
-  max-width: 44ch;
+  margin-top: 20px;
+  max-width: 46ch;
   font-size: 15px;
-  line-height: 1.45;
-  padding-left: 12px;
+  line-height: 1.5;
+  padding-left: 14px;
   border-left: 4px solid var(--red);
+  color: var(--muted);
 }
 
 .build {
   grid-area: build;
-  position: relative;
-  align-self: end;
+  align-self: center;
   justify-self: center;
   width: 100%;
-  max-width: 420px;
-  padding-top: clamp(84px, 8vw, 116px);
-}
-
-.numeral {
-  position: absolute;
-  top: 0;
-  left: -8px;
-  font-size: clamp(104px, 11vw, 180px);
-  font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 0.8;
-  pointer-events: none;
+  max-width: 440px;
 }
 
 .tower {
@@ -87,11 +83,6 @@
 .box {
   grid-area: box;
   align-self: center;
-  position: relative;
-  background: var(--card);
-  border: 3px solid var(--edge);
-  border-radius: 18px;
-  padding: 20px 22px 44px;
 }
 
 .box h2 {
@@ -102,7 +93,7 @@
 .box ul {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
   gap: 18px 12px;
   margin-top: 18px;
 }
@@ -128,8 +119,8 @@
 
 .scale {
   position: absolute;
-  right: 16px;
-  bottom: 12px;
+  right: 20px;
+  top: 22px;
   font-size: 20px;
   font-weight: 900;
 }
@@ -175,13 +166,19 @@
 
 @media (max-width: 1180px) {
   .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
     grid-template-areas:
-      "copy copy"
-      "build box"
+      "copy build"
+      "copy box"
       "strip strip";
-    grid-template-rows: auto;
+    grid-template-rows: auto auto auto;
     min-height: 0;
+  }
+  .build {
+    align-self: end;
+  }
+  .box {
+    align-self: start;
   }
 }
 
