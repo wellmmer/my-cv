@@ -216,7 +216,7 @@ export const cv: Cv = {
       n: 7,
       id: "fyture",
       company: "Fyture",
-      product: "Sales Journey, WedClub",
+      product: "Sales Journey + WedClub",
       role: {
         en: "Dev Lead & Senior Fullstack Developer",
         pt: "Dev Lead e Desenvolvedor Fullstack Sênior",
