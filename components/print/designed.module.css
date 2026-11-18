@@ -11,8 +11,8 @@
 .page {
   font-family: var(--font-rubik), Arial, sans-serif;
   font-weight: 500;
-  font-size: 9.2pt;
-  line-height: 1.32;
+  font-size: 9pt;
+  line-height: 1.3;
   color: var(--ink);
   max-width: 184mm;
   margin: 0 auto;
@@ -57,7 +57,7 @@
 }
 
 .block {
-  margin-top: 4mm;
+  margin-top: 3.4mm;
 }
 
 .block h2 {
@@ -81,7 +81,7 @@
   display: grid;
   grid-template-columns: 16mm 1fr;
   gap: 4mm;
-  margin-top: 2.2mm;
+  margin-top: 1.8mm;
   break-inside: avoid;
 }
 
