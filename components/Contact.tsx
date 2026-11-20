@@ -1,10 +1,11 @@
 import { Brick } from "@/components/brick/Brick";
 import { ContractNote } from "@/components/ContractNote";
+import { CvLink } from "@/components/CvLink";
 import { BrickButton } from "@/components/brick/BrickButton";
 import { Icon } from "@/components/icons";
 import { BRICK_HEX, type Locale } from "@/content/types";
 import { ui } from "@/content/ui";
-import { CONTACT, cvPdfPath, mailtoUrl, whatsappUrl } from "@/lib/contact";
+import { CONTACT, mailtoUrl, whatsappUrl } from "@/lib/contact";
 import styles from "@/components/Contact.module.css";
 
 export function Contact({ locale }: { locale: Locale }) {
@@ -25,9 +26,9 @@ export function Contact({ locale }: { locale: Locale }) {
         <BrickButton href={CONTACT.github} variant="github" icon="github" external>
           {t.cta.github}
         </BrickButton>
-        <BrickButton href={cvPdfPath(locale, "designed")} variant="pdf" icon="pdf" download>
+        <CvLink locale={locale} kind="designed" variant="button">
           {t.cta.download}
-        </BrickButton>
+        </CvLink>
       </div>
       <p className={styles.direct} data-direct>
         <a href={mailtoUrl(locale)}>

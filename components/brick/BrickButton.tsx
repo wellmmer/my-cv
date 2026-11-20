@@ -13,10 +13,12 @@ interface BrickButtonProps {
   children: ReactNode;
   /** Visible label length decides the stud count; pass it when children is not plain text. */
   label?: string;
+  /** Extra data-* attributes for the link. */
+  data?: Record<`data-${string}`, string>;
 }
 
 /** A link drawn as a flat brick: ink keyline, darker bottom band, studs on top. */
-export function BrickButton({ href, variant, icon, external, download, children, label }: BrickButtonProps) {
+export function BrickButton({ href, variant, icon, external, download, children, label, data }: BrickButtonProps) {
   const text = label ?? (typeof children === "string" ? children : "");
   const studs = text.length > 12 ? 4 : 2;
   return (
@@ -26,6 +28,7 @@ export function BrickButton({ href, variant, icon, external, download, children,
       className={`${styles.button} ${styles[variant]}`}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       {...(download ? { download: "" } : {})}
+      {...data}
     >
       <svg className={styles.studs} viewBox={`0 0 ${studs * 22} 12`} width={studs * 22} height={12} aria-hidden="true" focusable="false">
         {Array.from({ length: studs }, (_, i) => (

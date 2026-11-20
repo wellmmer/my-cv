@@ -30,6 +30,17 @@ export interface Ui {
   theme: { toDark: string; toLight: string };
   avatar: { showPhoto: string; showBricks: string };
   mainParts: string;
+  privateMode: {
+    title: string;
+    text: string;
+    label: string;
+    button: string;
+    wrong: string;
+    error: string;
+    close: string;
+    on: string;
+    lock: string;
+  };
   step: string;
   client: string;
   years: [string, string];
@@ -87,6 +98,17 @@ export const ui: L<Ui> = {
     theme: { toDark: "Switch to dark mode", toLight: "Switch to light mode" },
     avatar: { showPhoto: "Show my photo", showBricks: "Show the brick version" },
     mainParts: "Main parts of all steps",
+    privateMode: {
+      title: "Secret build unlocked",
+      text: "Got a code from Wellmmer? Snap it in to see the newest step.",
+      label: "Code",
+      button: "Unlock",
+      wrong: "That piece doesn't fit. Check the code and try again.",
+      error: "Something jammed. Try again in a moment.",
+      close: "Close",
+      on: "Private build on",
+      lock: "Lock",
+    },
     step: "Step",
     client: "Client",
     years: ["yr", "yrs"],
@@ -142,6 +164,17 @@ export const ui: L<Ui> = {
     theme: { toDark: "Ativar modo escuro", toLight: "Ativar modo claro" },
     avatar: { showPhoto: "Mostrar minha foto", showBricks: "Mostrar a versão em blocos" },
     mainParts: "Peças principais de todas as etapas",
+    privateMode: {
+      title: "Construção secreta desbloqueada",
+      text: "Recebeu um código do Wellmmer? Encaixe aqui para ver a etapa mais nova.",
+      label: "Código",
+      button: "Desbloquear",
+      wrong: "Essa peça não encaixa. Confira o código e tente de novo.",
+      error: "Algo travou. Tente de novo em instantes.",
+      close: "Fechar",
+      on: "Construção privada ativa",
+      lock: "Bloquear",
+    },
     step: "Etapa",
     client: "Cliente",
     years: ["ano", "anos"],
@@ -197,6 +230,17 @@ export const ui: L<Ui> = {
     theme: { toDark: "Activar modo oscuro", toLight: "Activar modo claro" },
     avatar: { showPhoto: "Mostrar mi foto", showBricks: "Mostrar la versión en bloques" },
     mainParts: "Piezas principales de todos los pasos",
+    privateMode: {
+      title: "Construcción secreta desbloqueada",
+      text: "¿Tienes un código de Wellmmer? Encájalo para ver el paso más nuevo.",
+      label: "Código",
+      button: "Desbloquear",
+      wrong: "Esa pieza no encaja. Revisa el código e inténtalo de nuevo.",
+      error: "Algo se trabó. Inténtalo de nuevo en un momento.",
+      close: "Cerrar",
+      on: "Construcción privada activa",
+      lock: "Bloquear",
+    },
     step: "Paso",
     client: "Cliente",
     years: ["año", "años"],

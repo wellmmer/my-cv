@@ -1,3 +1,4 @@
+import { PrivateSteps } from "@/components/PrivateSteps";
 import { StepCard } from "@/components/StepCard";
 import { Tower } from "@/components/brick/Tower";
 import { TowerMotion } from "@/components/TowerMotion";
@@ -34,6 +35,7 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
               <StepCard step={s} locale={locale} today={today} tower={tower} />
             </li>
           ))}
+          <PrivateSteps locale={locale} tower={tower} />
         </ol>
       </div>
       <TowerMotion />

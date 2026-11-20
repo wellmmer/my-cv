@@ -1,6 +1,7 @@
 import { Avatar } from "@/components/Avatar";
 import { Brick } from "@/components/brick/Brick";
 import { ContractNote } from "@/components/ContractNote";
+import { CvLink } from "@/components/CvLink";
 import { BrickButton } from "@/components/brick/BrickButton";
 import { BrickCard } from "@/components/brick/BrickCard";
 import { Tower } from "@/components/brick/Tower";
@@ -8,7 +9,7 @@ import { HeroMotion } from "@/components/HeroMotion";
 import { cv } from "@/content/cv";
 import { BRICK_HEX, type BrickColor, type Locale } from "@/content/types";
 import { ui } from "@/content/ui";
-import { CONTACT, cvPdfPath, mailtoUrl, whatsappUrl } from "@/lib/contact";
+import { CONTACT, mailtoUrl, whatsappUrl } from "@/lib/contact";
 import { mainParts } from "@/lib/parts";
 import styles from "@/components/Hero.module.css";
 
@@ -33,9 +34,9 @@ export function Hero({ locale }: { locale: Locale }) {
         </p>
         <p className={styles.summary}>{summary}</p>
         <div className={styles.ctas}>
-          <BrickButton href={cvPdfPath(locale, "designed")} variant="pdf" icon="pdf" download>
+          <CvLink locale={locale} kind="designed" variant="button">
             {t.cta.download}
-          </BrickButton>
+          </CvLink>
           <BrickButton href={whatsappUrl(locale)} variant="whatsapp" icon="whatsapp" external>
             {t.cta.whatsapp}
           </BrickButton>
@@ -49,9 +50,9 @@ export function Hero({ locale }: { locale: Locale }) {
             {t.cta.github}
           </BrickButton>
         </div>
-        <a className={styles.plain} href={cvPdfPath(locale, "ats")} download>
+        <CvLink locale={locale} kind="ats" variant="plain" className={styles.plain}>
           {t.cta.plainText}
-        </a>
+        </CvLink>
         <p className={styles.note}>
           <Brick color={BRICK_HEX.red} U={11} />
           <span>
