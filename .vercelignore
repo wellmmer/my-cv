@@ -1,5 +1,5 @@
 content/private.local.json
-private/
+/private/
 .superpowers/
 .vitest/
 test-results/
