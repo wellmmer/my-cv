@@ -20,11 +20,11 @@ export function TowerMotion() {
     if (!root) return;
     const mm = gsap.matchMedia();
     mm.add("(min-width: 961px) and (prefers-reduced-motion: no-preference)", () => {
-      // Animate only the brick shape (first child); its label link stays visible and usable.
+      // Animate only the brick body; its label (part of the same link) stays visible and usable.
       const steps = gsap.utils.toArray<SVGGElement>(root.querySelectorAll('[data-tower="sticky"] g[data-step]'));
       for (const g of steps) {
         const n = g.dataset.step;
-        const brick = g.firstElementChild;
+        const brick = g.querySelector("[data-brick-body]");
         if (!brick) continue;
         const step = root.querySelector(`article[data-step="${n}"]`);
         if (!step || n === "1") continue;

@@ -17,7 +17,7 @@ interface TowerProps {
   labels?: boolean;
   ariaLabel?: string;
   className?: string;
-  /** When set, each label links to this href (e.g. its step section). */
+  /** When set, each step (its brick and its label) is one link to this href (e.g. its step section). */
   labelHref?: (n: number) => string;
 }
 
@@ -49,22 +49,30 @@ export function Tower({ steps, U, liftTop = false, labels = false, ariaLabel, cl
         const z0 = k * h + (liftTop && k === lastK ? lift : 0);
         const [lx, ly] = P(w, 0, z0 + h / 2, ox, oy);
         const isTop = k === lastK;
+        const body = (
+          <g data-brick-body className={styles.body}>
+            <BrickShape U={U} z0={z0} w={w} d={d} h={h} color={s.color} ox={ox} oy={oy} />
+          </g>
+        );
+        const label =
+          labels && s.label ? (
+            <text x={lx + 22} y={ly + 6} className={isTop ? styles.labelNow : styles.label}>
+              {s.n} {s.label}
+            </text>
+          ) : null;
         return (
           <g key={s.n} data-step={s.n}>
-            <BrickShape U={U} z0={z0} w={w} d={d} h={h} color={s.color} ox={ox} oy={oy} />
-            {labels && s.label ? (
-              labelHref ? (
-                <a href={labelHref(s.n)} className={styles.link}>
-                  <text x={lx + 22} y={ly + 6} className={isTop ? styles.labelNow : styles.label}>
-                    {s.n} {s.label}
-                  </text>
-                </a>
-              ) : (
-                <text x={lx + 22} y={ly + 6} className={isTop ? styles.labelNow : styles.label}>
-                  {s.n} {s.label}
-                </text>
-              )
-            ) : null}
+            {labelHref && label ? (
+              <a href={labelHref(s.n)} className={styles.link}>
+                {body}
+                {label}
+              </a>
+            ) : (
+              <>
+                {body}
+                {label}
+              </>
+            )}
           </g>
         );
       })}

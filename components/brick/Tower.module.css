@@ -27,9 +27,26 @@
   text-decoration: none;
 }
 
-.link text {
+.link text,
+.link .body {
   text-decoration: none;
   cursor: pointer;
+}
+
+/* The brick lifts on hover and focus, like the year bricks; `translate` keeps clear of GSAP's transform. */
+.body {
+  transition: translate 140ms ease-out;
+}
+
+.link:hover .body,
+.link:focus-visible .body {
+  translate: 0 -5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body {
+    transition: none;
+  }
 }
 
 .link:hover text,

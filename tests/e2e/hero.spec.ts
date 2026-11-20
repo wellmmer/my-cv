@@ -37,7 +37,7 @@ test.describe("hero", () => {
 
   test("a tower label takes you to its step, below the top bar", async ({ page }) => {
     await page.goto("/en", { waitUntil: "networkidle" });
-    await page.locator('[data-hero-build] a[href="#step-3"]').click();
+    await page.locator('[data-hero-build] a[href="#step-3"] text').click();
     await expect(page).toHaveURL(/#step-3$/);
     await page.waitForTimeout(900);
     const bar = await page.locator("header").first().boundingBox();
@@ -113,4 +113,37 @@ test("the first screen shows the main parts of all steps with counts", async ({ 
   await expect(box.locator("li")).toHaveCount(8);
   await expect(box.locator("li").first()).toContainText("10x");
   await expect(box.locator("li").first()).toContainText("JavaScript");
+});
+
+test("clicking a tower brick, not just its label, goes to that step", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/en", { waitUntil: "networkidle" });
+  await expect(page.locator("[data-hero-build]")).toHaveAttribute("data-built", "");
+  // Find a point where brick 3 itself is what the visitor sees (isometric bricks overlap).
+  const point = await page.locator('[data-hero-build] g[data-step="3"] [data-brick-body]').evaluate((body) => {
+    const r = body.getBoundingClientRect();
+    for (let fy = 0.95; fy > 0.05; fy -= 0.05)
+      for (let fx = 0.1; fx < 0.9; fx += 0.05) {
+        const x = r.left + r.width * fx;
+        const y = r.top + r.height * fy;
+        const hit = document.elementFromPoint(x, y);
+        if (hit && body.contains(hit)) return { x, y };
+      }
+    return null;
+  });
+  expect(point).not.toBeNull();
+  await page.mouse.click(point!.x, point!.y);
+  await expect(page).toHaveURL(/#step-3$/);
+});
+
+test("each tower step is one link holding both its brick and its label", async ({ page }) => {
+  await page.goto("/en");
+  for (const root of ["[data-hero-build]", '[data-tower="sticky"]']) {
+    const links = page.locator(`${root} svg a`);
+    await expect(links).toHaveCount(10);
+    for (const a of await links.all()) {
+      await expect(a.locator("[data-brick-body]")).toHaveCount(1);
+      await expect(a.locator("text")).toHaveCount(1);
+    }
+  }
 });
