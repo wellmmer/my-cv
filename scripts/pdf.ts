@@ -1,6 +1,6 @@
 // Prints the CV PDFs from the site's print routes with local Chrome.
 //   npm run pdf          -> six public PDFs in public/cv/
-//   npm run pdf:private  -> three designed PDFs with private steps in private/ (gitignored)
+//   npm run pdf:private  -> six PDFs (designed + ATS) with private steps in private/ (gitignored)
 import { spawn, type ChildProcess } from "node:child_process";
 import { existsSync } from "node:fs";
 import { mkdir, unlink } from "node:fs/promises";
@@ -81,7 +81,10 @@ async function main() {
     const page = await browser.newPage();
     const jobs = LOCALES.flatMap((locale) =>
       isPrivate
-        ? [{ route: `/${locale}/cv/print`, out: `private/Wellmmer-Lucas-CV-PRIVATE-${locale.toUpperCase()}.pdf` }]
+        ? [
+            { route: `/${locale}/cv/print`, out: `private/Wellmmer-Lucas-CV-PRIVATE-${locale.toUpperCase()}.pdf` },
+            { route: `/${locale}/cv/print/ats`, out: `private/Wellmmer-Lucas-CV-PRIVATE-ATS-${locale.toUpperCase()}.pdf` },
+          ]
         : (["designed", "ats"] as const).map((kind) => ({
             route: kind === "ats" ? `/${locale}/cv/print/ats` : `/${locale}/cv/print`,
             out: `public${cvPdfPath(locale, kind)}`,
