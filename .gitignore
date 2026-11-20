@@ -54,3 +54,4 @@ playwright-report/
 
 # secret terms for the leak guard (never commit)
 leak-terms.local.json
+.env*.local
