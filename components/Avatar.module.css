@@ -6,6 +6,8 @@
   border: 0;
   background: none;
   cursor: pointer;
+  /* Twenty quick taps must count as taps, not as a double-tap zoom. */
+  touch-action: manipulation;
   perspective: 700px;
   border-radius: 16px;
 }

@@ -9,6 +9,12 @@ describe("private code", () => {
     expect(verifyCode("brick-tango-lamp-owk", h)).toBe(false);
   });
 
+  it("accepts the code typed with spaces or long dashes", () => {
+    const h = hashCode("brick-tango-lamp-owl");
+    expect(verifyCode("Brick Tango  Lamp Owl", h)).toBe(true);
+    expect(verifyCode("brick\u2013tango\u2014lamp\u2011owl", h)).toBe(true);
+  });
+
   it("never stores the code in the hash", () => {
     expect(hashCode("brick-tango-lamp-owl")).not.toContain("brick");
   });

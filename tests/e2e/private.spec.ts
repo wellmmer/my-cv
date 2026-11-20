@@ -105,6 +105,11 @@ test.describe("easter egg", () => {
     await expect(page.locator("#step-11")).toContainText("Acme Test Co");
   });
 
+  test("quick taps on the avatar never zoom the page on phones", async ({ page }) => {
+    await page.goto("/en");
+    expect(await page.locator("[data-avatar]").evaluate((el) => getComputedStyle(el).touchAction)).toBe("manipulation");
+  });
+
   test("the avatar still flips on one click", async ({ page }) => {
     await page.goto("/en");
     await page.locator("[data-avatar]").click();

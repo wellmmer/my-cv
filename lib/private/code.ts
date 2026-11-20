@@ -3,8 +3,12 @@ import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypt
 const KEYLEN = 32;
 const N = 16384;
 
+/** Case-insensitive; spaces and any dash between words count as "-", so "Brick Tango" equals "brick-tango". */
 function normalize(code: string): string {
-  return code.trim().toLowerCase();
+  return code
+    .trim()
+    .toLowerCase()
+    .replace(/[\s\u2010-\u2015\u2212-]+/g, "-");
 }
 
 /** Hash of the unlock code: `scrypt$<salt>$<hash>`, both base64url. The code itself is never stored. */

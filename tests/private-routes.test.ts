@@ -107,6 +107,14 @@ describe("private routes", () => {
     expect((await cvGet(get("/api/private/cv?kind=designed&locale=fr", cookie))).status).toBe(404);
   });
 
+  it("falls back to the public PDF when the private file cannot be read", async () => {
+    const cookie = await cookieFromUnlock();
+    process.env.PRIVATE_FILES_DIR = "tests/fixtures/does-not-exist";
+    const res = await cvGet(get("/api/private/cv?kind=ats&locale=pt", cookie));
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe(`${BASE}/cv/Wellmmer-Lucas-CV-ATS-PT.pdf`);
+  });
+
   it("lock clears the cookie", async () => {
     const res = await lockPost();
     expect(res.status).toBe(204);
