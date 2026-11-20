@@ -1,0 +1,131 @@
+.dialog {
+  width: min(440px, calc(100vw - 32px));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  overflow: visible;
+}
+
+.dialog::backdrop {
+  background: color-mix(in srgb, #000 55%, transparent);
+}
+
+.dialog[open] .card {
+  animation: drop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.label {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2.4px solid var(--edge);
+  border-radius: 8px;
+  background: var(--page);
+  color: var(--ink);
+  font: inherit;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.alert {
+  min-height: 1.4em;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.unlock,
+.close {
+  padding: 10px 18px 13px;
+  border: 2.4px solid #111;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: translate 140ms ease-out;
+}
+
+.unlock {
+  background: var(--green);
+  color: #fff;
+  box-shadow: inset 0 -5px 0 #005c1e;
+}
+
+.close {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: inset 0 -5px 0 var(--band-white);
+}
+
+.unlock:hover,
+.close:hover {
+  translate: 0 -2px;
+}
+
+.unlock:focus-visible,
+.close:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.unlock:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open] .card {
+    animation: none;
+  }
+  .unlock,
+  .close {
+    transition: none;
+  }
+}

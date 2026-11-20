@@ -64,3 +64,50 @@ test("build output has no private words", () => {
   const hits = walk(".next").filter((f) => /\.(html|js|json|rsc|txt|body|meta)$/.test(f) && readFileSync(f, "utf8").includes("Acme Test Co"));
   expect(hits).toEqual([]);
 });
+
+test.describe("easter egg", () => {
+  async function tapAvatar(page: Page, n: number) {
+    const avatar = page.locator("[data-avatar]");
+    // The first click proves the page is hydrated (the avatar flips), so no tap is lost.
+    await avatar.click();
+    await expect(avatar).toHaveAttribute("aria-pressed", "true");
+    for (let i = 1; i < n; i++) await avatar.click({ delay: 0 });
+  }
+
+  test("20 avatar clicks open the code box", async ({ page }) => {
+    await page.goto("/en");
+    await tapAvatar(page, 20);
+    await expect(page.locator("dialog[open]")).toBeVisible();
+    await expect(page.locator("dialog[open] input")).toBeFocused();
+  });
+
+  test("19 clicks do not", async ({ page }) => {
+    await page.goto("/en");
+    await tapAvatar(page, 19);
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+  });
+
+  test("wrong code shows the error and keeps the box open", async ({ page }) => {
+    await page.goto("/en");
+    await tapAvatar(page, 20);
+    await page.locator("dialog[open] input").fill("nope");
+    await page.locator("dialog[open] button[type=submit]").click();
+    await expect(page.locator("dialog[open] [role=alert]")).toHaveText("That piece doesn't fit. Check the code and try again.");
+    await expect(page.locator("dialog[open]")).toBeVisible();
+  });
+
+  test("right code unlocks from the box", async ({ page }) => {
+    await page.goto("/en");
+    await tapAvatar(page, 20);
+    await page.locator("dialog[open] input").fill(CODE);
+    await page.locator("dialog[open] button[type=submit]").click();
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+    await expect(page.locator("#step-11")).toContainText("Acme Test Co");
+  });
+
+  test("the avatar still flips on one click", async ({ page }) => {
+    await page.goto("/en");
+    await page.locator("[data-avatar]").click();
+    await expect(page.locator("[data-avatar]")).toHaveAttribute("aria-pressed", "true");
+  });
+});

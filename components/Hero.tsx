@@ -25,7 +25,7 @@ export function Hero({ locale }: { locale: Locale }) {
   return (
     <section className={styles.hero} aria-labelledby="hero-name">
       <div className={styles.copy} data-hero-copy>
-        <Avatar labels={t.avatar} />
+        <Avatar labels={t.avatar} privateMode={t.privateMode} />
         <h1 id="hero-name" className={styles.name}>
           <span>Wellmmer</span> <span>Lucas</span>
         </h1>
