@@ -1,0 +1,21 @@
+{
+  "steps": [
+    {
+      "n": 11,
+      "id": "acme",
+      "company": "Acme Test Co",
+      "companyUrl": "https://example.com/",
+      "role": { "en": "Test Brick Engineer", "pt": "Engenheiro de Blocos de Teste", "es": "Ingeniero de Bloques de Prueba" },
+      "start": "2025-10",
+      "end": "now",
+      "city": { "en": "Remote", "pt": "Remoto", "es": "Remoto" },
+      "brick": "green",
+      "bullets": {
+        "en": ["Fixture bullet for the private mode tests."],
+        "pt": ["Item de teste do modo privado."],
+        "es": ["Viñeta de prueba del modo privado."]
+      },
+      "uses": ["javascript", "typescript", "react"]
+    }
+  ]
+}
