@@ -40,6 +40,9 @@ export interface Ui {
     close: string;
     on: string;
     lock: string;
+    opening: string;
+    linkBad: string;
+    openCv: string;
   };
   step: string;
   client: string;
@@ -108,6 +111,9 @@ export const ui: L<Ui> = {
       close: "Close",
       on: "Private build on",
       lock: "Lock",
+      opening: "Snapping the private build in…",
+      linkBad: "This link no longer works. Ask Wellmmer for a new one.",
+      openCv: "Open the CV",
     },
     step: "Step",
     client: "Client",
@@ -174,6 +180,9 @@ export const ui: L<Ui> = {
       close: "Fechar",
       on: "Construção privada ativa",
       lock: "Bloquear",
+      opening: "Encaixando a construção privada…",
+      linkBad: "Este link não funciona mais. Peça um novo ao Wellmmer.",
+      openCv: "Abrir o currículo",
     },
     step: "Etapa",
     client: "Cliente",
@@ -240,6 +249,9 @@ export const ui: L<Ui> = {
       close: "Cerrar",
       on: "Construcción privada activa",
       lock: "Bloquear",
+      opening: "Encajando la construcción privada…",
+      linkBad: "Este enlace ya no funciona. Pídele uno nuevo a Wellmmer.",
+      openCv: "Abrir el CV",
     },
     step: "Paso",
     client: "Cliente",

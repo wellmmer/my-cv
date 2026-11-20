@@ -132,3 +132,37 @@ test.describe("easter egg", () => {
     await expect(page.locator("[data-avatar]")).toHaveAttribute("aria-pressed", "true");
   });
 });
+
+test.describe("private link", () => {
+  test("the link unlocks, lands on step 11 and never sends the code in a URL", async ({ page }) => {
+    const urls: string[] = [];
+    page.on("request", (r) => urls.push(r.url()));
+    await page.goto(`/en/private#${CODE}`);
+    await page.waitForURL(/\/en#step-11$/);
+    await expect(page.locator("#step-11")).toContainText("Acme Test Co");
+    await expect(page.locator("#step-11")).toBeInViewport();
+    await expect(page.locator('[data-cv-link="ats"]')).toHaveAttribute("href", "/api/private/cv?kind=ats&locale=en");
+    expect(urls.filter((u) => u.includes(CODE))).toEqual([]);
+    expect(page.url()).not.toContain(CODE);
+  });
+
+  test("a wrong link says so, unlocks nothing and drops the code from the address bar", async ({ page }) => {
+    await page.goto("/en/private#not-a-real-code");
+    await expect(page.locator("[data-private-link]")).toContainText("This link no longer works");
+    expect(page.url()).not.toContain("not-a-real-code");
+    await page.locator("[data-private-link] a").click();
+    await page.waitForURL(/\/en$/);
+    await page.waitForLoadState("networkidle");
+    await expect(page.locator("#step-11")).toHaveCount(0);
+  });
+
+  test("a link with no code says so", async ({ page }) => {
+    await page.goto("/pt/private");
+    await expect(page.locator("[data-private-link]")).toContainText("Este link não funciona mais");
+  });
+
+  test("the link page is not indexed", async ({ page }) => {
+    await page.goto("/es/private");
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  });
+});
