@@ -13,6 +13,7 @@ export interface PrivateState {
 const INITIAL: PrivateState = { status: "unknown", steps: [] };
 let state: PrivateState = INITIAL;
 let started = false;
+let reveal = false;
 const listeners = new Set<() => void>();
 
 function set(next: PrivateState) {
@@ -48,6 +49,18 @@ export function usePrivateMode(): PrivateState {
   return useSyncExternalStore(subscribe, () => state, () => INITIAL);
 }
 
+/** The current state, outside React (the link page reads the step number after unlocking). */
+export function privateSnapshot(): PrivateState {
+  return state;
+}
+
+/** True once after a code was just accepted, so the page can go to the new step. */
+export function takeReveal(): boolean {
+  const r = reveal;
+  reveal = false;
+  return r;
+}
+
 /** Sends the code; on success loads the private steps. "ok" only when private mode is really on. */
 export async function unlock(code: string): Promise<"ok" | "wrong" | "error"> {
   try {
@@ -58,7 +71,10 @@ export async function unlock(code: string): Promise<"ok" | "wrong" | "error"> {
       credentials: "same-origin",
     });
     if (res.status === 204) {
+      // Set before loading: the step renders as soon as the load lands, and reads this flag then.
+      reveal = true;
       await load();
+      if (state.status !== "on") reveal = false;
       // The cookie may not have stuck (e.g. blocked); only report success when the step really loaded.
       return state.status === "on" ? "ok" : "error";
     }

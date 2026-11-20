@@ -116,6 +116,9 @@ test.describe("easter egg", () => {
     await page.locator("dialog[open] button[type=submit]").click();
     await expect(page.locator("dialog[open]")).toHaveCount(0);
     await expect(page.locator("#step-11")).toContainText("Acme Test Co");
+    // Unlocking must be visible: the page goes to the new step and it glows.
+    await expect(page.locator("#step-11")).toBeInViewport();
+    await expect(page.locator("li[data-reveal]")).toHaveCount(1);
   });
 
   test("quick taps on the avatar never zoom the page on phones", async ({ page }) => {

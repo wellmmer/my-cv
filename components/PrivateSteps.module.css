@@ -3,6 +3,17 @@
   animation: snap 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* After an unlock the new step glows once, so the change is easy to spot. */
+.item {
+  border-radius: 14px;
+}
+
+.item[data-reveal] {
+  animation:
+    snap 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    glow 2400ms ease-out;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -50,9 +61,24 @@
   }
 }
 
+@keyframes glow {
+  0%,
+  40% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--green) 70%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 22px color-mix(in srgb, var(--green) 0%, transparent);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .item {
+  .item,
+  .item[data-reveal] {
     animation: none;
+  }
+  .item[data-reveal] {
+    outline: 4px solid var(--green);
+    outline-offset: 6px;
   }
   .lock {
     transition: none;
