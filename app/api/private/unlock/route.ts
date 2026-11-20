@@ -16,15 +16,20 @@ async function readBounded(req: NextRequest): Promise<string | null> {
   const reader = req.body.getReader();
   const chunks: Uint8Array[] = [];
   let size = 0;
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    size += value.byteLength;
-    if (size > MAX_BODY) {
-      await reader.cancel();
-      return null;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_BODY) {
+        await reader.cancel().catch(() => undefined);
+        return null;
+      }
+      chunks.push(value);
     }
-    chunks.push(value);
+  } catch {
+    // The client went away mid-body.
+    return null;
   }
   return Buffer.concat(chunks).toString("utf8");
 }
@@ -48,7 +53,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   let res: Response;
   if (!cfg) res = notFound();
   else if (code === null) res = new Response(null, { status: 400, headers: privateHeaders() });
-  else if (!verifyCode(code, cfg.codeHash)) res = new Response(null, { status: 401, headers: privateHeaders() });
+  else if (!(await verifyCode(code, cfg.codeHash))) res = new Response(null, { status: 401, headers: privateHeaders() });
   else {
     const ok = new NextResponse(null, { status: 204, headers: privateHeaders() });
     ok.cookies.set(COOKIE, signToken({ exp: Date.now() + MAX_AGE_S * 1000, v: cfg.v }, cfg.secret), {

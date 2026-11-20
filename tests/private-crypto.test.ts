@@ -1,27 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { codeFingerprint, hashCode, verifyCode } from "@/lib/private/code";
+import { codeFingerprint, hashCode, isCodeHash, verifyCode } from "@/lib/private/code";
 import { signToken, verifyToken } from "@/lib/private/token";
 
 describe("private code", () => {
-  it("verifies the right code, ignoring case and spaces", () => {
+  it("verifies the right code, ignoring case and spaces", async () => {
     const h = hashCode("Brick-Tango-Lamp-Owl");
-    expect(verifyCode("  brick-tango-lamp-owl ", h)).toBe(true);
-    expect(verifyCode("brick-tango-lamp-owk", h)).toBe(false);
+    expect(await verifyCode("  brick-tango-lamp-owl ", h)).toBe(true);
+    expect(await verifyCode("brick-tango-lamp-owk", h)).toBe(false);
   });
 
-  it("accepts the code typed with spaces or long dashes", () => {
+  it("accepts the code typed with spaces or long dashes", async () => {
     const h = hashCode("brick-tango-lamp-owl");
-    expect(verifyCode("Brick Tango  Lamp Owl", h)).toBe(true);
-    expect(verifyCode("brick\u2013tango\u2014lamp\u2011owl", h)).toBe(true);
+    expect(await verifyCode("Brick Tango  Lamp Owl", h)).toBe(true);
+    expect(await verifyCode("brick\u2013tango\u2014lamp\u2011owl", h)).toBe(true);
+  });
+
+  it("checks the code without blocking the event loop", () => {
+    expect(verifyCode("x", hashCode("x"))).toBeInstanceOf(Promise);
+  });
+
+  it("knows a well-formed hash from a broken one", () => {
+    expect(isCodeHash(hashCode("a-b-c-d-e"))).toBe(true);
+    for (const bad of ["", "nope", "scrypt$$", "scrypt$abc$def", "bcrypt$x$y"]) expect(isCodeHash(bad), bad).toBe(false);
   });
 
   it("never stores the code in the hash", () => {
     expect(hashCode("brick-tango-lamp-owl")).not.toContain("brick");
   });
 
-  it("rejects a malformed stored hash", () => {
-    expect(verifyCode("x", "nope")).toBe(false);
-    expect(verifyCode("x", "scrypt$$")).toBe(false);
+  it("rejects a malformed stored hash", async () => {
+    expect(await verifyCode("x", "nope")).toBe(false);
+    expect(await verifyCode("x", "scrypt$$")).toBe(false);
   });
 });
 

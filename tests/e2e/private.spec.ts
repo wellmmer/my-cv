@@ -96,6 +96,19 @@ test.describe("easter egg", () => {
     await expect(page.locator("dialog[open]")).toBeVisible();
   });
 
+  test("closing the box mid-check leaves no stale error on reopen", async ({ page }) => {
+    await page.goto("/en");
+    await tapAvatar(page, 20);
+    await page.locator("dialog[open] input").fill("nope");
+    await page.locator("dialog[open] button[type=submit]").click();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+    await page.waitForTimeout(1500);
+    await tapAvatar(page, 20);
+    await expect(page.locator("dialog[open]")).toBeVisible();
+    await expect(page.locator("dialog[open] [role=alert]")).toHaveText("");
+  });
+
   test("right code unlocks from the box", async ({ page }) => {
     await page.goto("/en");
     await tapAvatar(page, 20);

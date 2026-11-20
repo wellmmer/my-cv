@@ -85,7 +85,7 @@ describe("private routes", () => {
     const res = await unlockPost(unlockReq(JSON.stringify({ code: CODE })));
     expect(res.status).toBe(204);
     const c = res.headers.get("set-cookie") ?? "";
-    for (const part of ["cv_private=", "HttpOnly", "Secure", "Max-Age=2592000", "Path=/"]) expect(c).toContain(part);
+    for (const part of ["__Host-cv_private=", "HttpOnly", "Secure", "Max-Age=2592000", "Path=/"]) expect(c).toContain(part);
     expect(c.toLowerCase()).toContain("samesite=lax");
     expectPrivateHeaders(res);
   });
@@ -113,6 +113,31 @@ describe("private routes", () => {
     const res = await cvGet(get("/api/private/cv?kind=ats&locale=pt", cookie));
     expect(res.status).toBe(302);
     expect(res.headers.get("location")).toBe(`${BASE}/cv/Wellmmer-Lucas-CV-ATS-PT.pdf`);
+  });
+
+  it("answers 400 within the floor when the client aborts mid-body", async () => {
+    setMinDelay(300);
+    const broken = new ReadableStream<Uint8Array>({
+      pull(c) {
+        c.error(new Error("client aborted"));
+      },
+    });
+    const t = Date.now();
+    const res = await unlockPost(
+      new NextRequest(`${BASE}/api/private/unlock`, { method: "POST", body: broken, duplex: "half" } as unknown as ConstructorParameters<typeof NextRequest>[1]),
+    );
+    expect(res.status).toBe(400);
+    expect(Date.now() - t).toBeGreaterThanOrEqual(300);
+  });
+
+  it("sends only the known step fields", async () => {
+    const data = JSON.parse(process.env.PRIVATE_STEPS_JSON!);
+    data.steps[0].internalNote = "do-not-ship";
+    process.env.PRIVATE_STEPS_JSON = JSON.stringify(data);
+    const cookie = await cookieFromUnlock();
+    const text = await (await stepGet(get("/api/private/step", cookie))).text();
+    expect(text).toContain("Acme Test Co");
+    expect(text).not.toContain("do-not-ship");
   });
 
   it("lock clears the cookie", async () => {

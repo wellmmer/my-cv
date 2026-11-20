@@ -1,9 +1,11 @@
 // Server-only helpers shared by the /api/private/* route handlers.
+import "server-only";
 import type { NextRequest } from "next/server";
 import type { PrivateConfig } from "@/lib/private/config";
 import { verifyToken } from "@/lib/private/token";
 
-export const COOKIE = "cv_private";
+/** `__Host-`: the browser only accepts it Secure, on Path=/ and without a Domain. */
+export const COOKIE = "__Host-cv_private";
 export const MAX_AGE_S = 30 * 24 * 60 * 60;
 
 let minDelayMs = 1000;

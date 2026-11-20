@@ -1,4 +1,4 @@
-import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, scrypt, scryptSync, timingSafeEqual } from "node:crypto";
 
 const KEYLEN = 32;
 const N = 16384;
@@ -17,14 +17,20 @@ export function hashCode(code: string, salt: Buffer = randomBytes(16)): string {
   return `scrypt$${salt.toString("base64url")}$${hash.toString("base64url")}`;
 }
 
-/** Timing-safe check of a typed code against a stored hash. False for any malformed hash. */
-export function verifyCode(code: string, stored: string): boolean {
-  const [kind, salt, hash] = stored.split("$");
-  if (kind !== "scrypt" || !salt || !hash) return false;
-  const want = Buffer.from(hash, "base64url");
-  if (want.length !== KEYLEN) return false;
-  const got = scryptSync(normalize(code), Buffer.from(salt, "base64url"), KEYLEN, { N });
-  return timingSafeEqual(got, want);
+/** True for a well-formed `scrypt$<salt>$<32-byte hash>` string. */
+export function isCodeHash(stored: string): boolean {
+  const [kind, salt, hash, extra] = stored.split("$");
+  return kind === "scrypt" && !!salt && !!hash && extra === undefined && Buffer.from(hash, "base64url").length === KEYLEN;
+}
+
+/** Timing-safe check of a typed code against a stored hash, off the main thread. False for any malformed hash. */
+export async function verifyCode(code: string, stored: string): Promise<boolean> {
+  if (!isCodeHash(stored)) return false;
+  const [, salt, hash] = stored.split("$");
+  const got = await new Promise<Buffer>((resolve, reject) =>
+    scrypt(normalize(code), Buffer.from(salt, "base64url"), KEYLEN, { N }, (err, key) => (err ? reject(err) : resolve(key))),
+  );
+  return timingSafeEqual(got, Buffer.from(hash, "base64url"));
 }
 
 /** Short fingerprint of the stored hash; a new code gives a new fingerprint, which voids old cookies. */

@@ -1,5 +1,5 @@
 // npm run private:publish
-// 1. Builds the six private PDFs (npm run pdf:private, with its 2-page and private-step checks).
+// 1. Builds the six private PDFs (npm run pdf:private, which checks each one contains the private step).
 // 2. Uploads them to the private Vercel Blob store at fixed paths, overwriting the old ones.
 // 3. Prints the command that updates PRIVATE_STEPS_JSON from content/private.local.json.
 // Needs BLOB_READ_WRITE_TOKEN (vercel env pull .env.local, then export it). Never prints private data.

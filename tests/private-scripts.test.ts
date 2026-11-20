@@ -13,13 +13,13 @@ describe("private code generator", () => {
     expect(new Set(WORDS).size).toBe(1296);
   });
 
-  it("joins four words with dashes", () => {
-    expect(newCode(() => 0)).toBe([WORDS[0], WORDS[0], WORDS[0], WORDS[0]].join("-"));
+  it("joins five words with dashes (about 52 bits)", () => {
+    expect(newCode(() => 0)).toBe(Array(5).fill(WORDS[0]).join("-"));
   });
 
-  it("makes codes that verify against their own hash", () => {
+  it("makes codes that verify against their own hash", async () => {
     const code = newCode();
-    expect(verifyCode(code, hashCode(code))).toBe(true);
+    expect(await verifyCode(code, hashCode(code))).toBe(true);
   });
 });
 

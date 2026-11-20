@@ -48,7 +48,7 @@ export function usePrivateMode(): PrivateState {
   return useSyncExternalStore(subscribe, () => state, () => INITIAL);
 }
 
-/** Sends the code; on success loads the private steps. */
+/** Sends the code; on success loads the private steps. "ok" only when private mode is really on. */
 export async function unlock(code: string): Promise<"ok" | "wrong" | "error"> {
   try {
     const res = await fetch("/api/private/unlock", {
@@ -59,7 +59,8 @@ export async function unlock(code: string): Promise<"ok" | "wrong" | "error"> {
     });
     if (res.status === 204) {
       await load();
-      return "ok";
+      // The cookie may not have stuck (e.g. blocked); only report success when the step really loaded.
+      return state.status === "on" ? "ok" : "error";
     }
     return res.status === 401 || res.status === 400 ? "wrong" : "error";
   } catch {

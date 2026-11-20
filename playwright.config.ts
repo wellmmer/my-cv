@@ -26,7 +26,9 @@ export default defineConfig({
     command: `npm run build && npx next start -p ${PORT}`,
     url: `http://localhost:${PORT}/en`,
     timeout: 240_000,
-    reuseExistingServer: !process.env.CI,
+    // Always build fresh: a reused server may not have been built with the fixture env,
+    // which would make the "build output has no private words" check pass vacuously.
+    reuseExistingServer: false,
     env: PRIVATE_ENV,
   },
 });

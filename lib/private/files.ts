@@ -1,4 +1,5 @@
 // Server-only: private PDFs come from a private Vercel Blob store (or a local folder in tests).
+import "server-only";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { get } from "@vercel/blob";

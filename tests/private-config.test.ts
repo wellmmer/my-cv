@@ -31,6 +31,7 @@ describe("privateConfig", () => {
     delete bad.steps[0].company;
     expect(privateConfig(env({ PRIVATE_STEPS_JSON: JSON.stringify(bad) }))).toBeNull();
     expect(privateConfig(env({ UNLOCK_SECRET: "short" }))).toBeNull();
+    expect(privateConfig(env({ PRIVATE_CODE_HASH: "not-a-hash" }))).toBeNull();
   });
 });
 

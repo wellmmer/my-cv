@@ -1,7 +1,8 @@
 // Server-only: read by the /api/private/* route handlers, never by pages or components.
+import "server-only";
 import { isStep } from "@/content/private";
 import type { Step } from "@/content/types";
-import { codeFingerprint } from "@/lib/private/code";
+import { codeFingerprint, isCodeHash } from "@/lib/private/code";
 
 export interface PrivateConfig {
   steps: Step[];
@@ -17,6 +18,10 @@ export function privateConfig(env: NodeJS.ProcessEnv = process.env): PrivateConf
   const codeHash = env.PRIVATE_CODE_HASH;
   const secret = env.UNLOCK_SECRET;
   if (!raw || !codeHash || !secret) return null;
+  if (!isCodeHash(codeHash)) {
+    console.warn("private mode off: PRIVATE_CODE_HASH is not a valid code hash");
+    return null;
+  }
   if (secret.length < 32) {
     console.warn("private mode off: UNLOCK_SECRET is too short");
     return null;

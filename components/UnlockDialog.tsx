@@ -39,6 +39,8 @@ export function UnlockDialog({
     setMessage("");
     const result = await unlock(code);
     setBusy(false);
+    // Closed while checking: drop the answer so it can't show up on the next open.
+    if (!ref.current?.open) return;
     if (result === "ok") {
       if (input.current) input.current.value = "";
       onClose();
