@@ -53,8 +53,6 @@ export interface Step {
   /** How many bullets the PDFs show (the first N). All when unset. */
   pdfBullets?: number;
   uses: SkillId[];
-  /** Up to six parts shown in the first-screen parts box (newest step only). */
-  keyParts?: SkillId[];
   note?: L;
 }
 

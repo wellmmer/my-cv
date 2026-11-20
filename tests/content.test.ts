@@ -5,12 +5,13 @@ import { SKILLS } from "@/content/skills";
 import { BRICK_HEX, LOCALES } from "@/content/types";
 import { ui } from "@/content/ui";
 import { bulletText } from "@/lib/bullets";
+import { contractText } from "@/lib/contract";
 
 /** Every piece of free copy where a number could be invented. */
 function copy(): string[] {
   const out: string[] = [];
   for (const l of LOCALES) {
-    out.push(cv.summary[l], ui[l].contractNote);
+    out.push(cv.summary[l], contractText(l));
     for (const s of cv.steps) {
       out.push(...s.bullets[l].map(bulletText));
       if (s.note) out.push(s.note[l]);
@@ -46,7 +47,7 @@ describe("content", () => {
   it("uses only confirmed numbers in copy", () => {
     for (const text of copy()) {
       const cleaned = text.replace(/UTC-3|COVID-19/g, "");
-      for (const [n] of cleaned.matchAll(/\b\d+\b/g)) {
+      for (const [n] of cleaned.matchAll(/\b\d+(?:,\d{3})*\b/g)) {
         expect(ALLOWED_NUMBERS, `"${n}" in: ${text}`).toContain(n);
       }
     }
@@ -88,12 +89,6 @@ describe("content", () => {
 
   it("keeps tower labels short", () => {
     for (const s of cv.steps) expect((s.short ?? s.company).length, s.id).toBeLessThanOrEqual(12);
-  });
-
-  it("names the key parts of the newest step for the first screen", () => {
-    const newest = cv.steps[cv.steps.length - 1];
-    expect(newest.keyParts?.length).toBe(6);
-    for (const id of newest.keyParts ?? []) expect(newest.uses).toContain(id);
   });
 
   it("has no empty strings in any language", () => {

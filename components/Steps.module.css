@@ -71,8 +71,8 @@
   place-items: center;
   width: 32px;
   height: 32px;
-  margin-left: 8px;
-  vertical-align: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
   border-radius: 8px;
   color: var(--muted);
 }
@@ -84,6 +84,10 @@
 
 .product {
   font-weight: 700;
+}
+
+.glue {
+  white-space: nowrap;
 }
 
 .role {

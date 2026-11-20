@@ -21,15 +21,15 @@ export interface Ui {
   whatsappText: string;
   emailSubject: string;
   contactHeading: string;
-  contractNote: string;
+  /** `{deel}` marks where the Deel link goes. */
+  contract: { lead: string; text: string };
   partsInThisStep: string;
   via: string;
   /** `{name}` is the company name. */
   visit: string;
   theme: { toDark: string; toLight: string };
   avatar: { showPhoto: string; showBricks: string };
-  /** `{n}` is the step number. */
-  partsInStep: string;
+  mainParts: string;
   step: string;
   client: string;
   years: [string, string];
@@ -77,14 +77,16 @@ export const ui: L<Ui> = {
     whatsappText: "Hi Wellmmer, I saw your CV and would like to talk about a role.",
     emailSubject: "Role for Wellmmer Lucas",
     contactHeading: "Last step: snap yourself on.",
-    contractNote:
-      "Contract-ready: I invoice through ChimpCode, my own Brazilian company, since 2018, and for companies abroad since 2022. B2B contract, no employer of record needed, and also on Deel.",
+    contract: {
+      lead: "Contract-ready:",
+      text: "I invoice through ChimpCode, my own Brazilian company, since 2018, and for companies abroad since 2022. B2B contract, no employer of record needed. I'm also on {deel}, and open to any other platform you prefer.",
+    },
     partsInThisStep: "Parts in this step",
     via: "via",
     visit: "Visit {name}",
     theme: { toDark: "Switch to dark mode", toLight: "Switch to light mode" },
     avatar: { showPhoto: "Show my photo", showBricks: "Show the brick version" },
-    partsInStep: "Parts in step {n}",
+    mainParts: "Main parts of all steps",
     step: "Step",
     client: "Client",
     years: ["yr", "yrs"],
@@ -130,14 +132,16 @@ export const ui: L<Ui> = {
     whatsappText: "Olá Wellmmer, vi seu currículo e gostaria de conversar sobre uma vaga.",
     emailSubject: "Vaga para Wellmmer Lucas",
     contactHeading: "Última etapa: encaixe-se aqui.",
-    contractNote:
-      "Pronto para contrato: emito nota pela ChimpCode, minha empresa no Brasil, desde 2018, e para empresas do exterior desde 2022. Contrato B2B, sem necessidade de employer of record, e também via Deel.",
+    contract: {
+      lead: "Pronto para contrato:",
+      text: "emito nota pela ChimpCode, minha empresa no Brasil, desde 2018, e para empresas do exterior desde 2022. Contrato B2B, sem employer of record. Também assino pela {deel} ou por qualquer outra plataforma.",
+    },
     partsInThisStep: "Peças desta etapa",
     via: "via",
     visit: "Visitar {name}",
     theme: { toDark: "Ativar modo escuro", toLight: "Ativar modo claro" },
     avatar: { showPhoto: "Mostrar minha foto", showBricks: "Mostrar a versão em blocos" },
-    partsInStep: "Peças da etapa {n}",
+    mainParts: "Peças principais de todas as etapas",
     step: "Etapa",
     client: "Cliente",
     years: ["ano", "anos"],
@@ -183,14 +187,16 @@ export const ui: L<Ui> = {
     whatsappText: "Hola Wellmmer, vi tu CV y me gustaría hablar sobre una vacante.",
     emailSubject: "Vacante para Wellmmer Lucas",
     contactHeading: "Último paso: encájate aquí.",
-    contractNote:
-      "Listo para contratar: facturo con ChimpCode, mi propia empresa en Brasil, desde 2018, y a empresas del exterior desde 2022. Contrato B2B, sin necesidad de employer of record, y también por Deel.",
+    contract: {
+      lead: "Listo para contratar:",
+      text: "facturo con ChimpCode, mi propia empresa en Brasil, desde 2018, y a empresas del exterior desde 2022. Contrato B2B, sin necesidad de employer of record. También estoy en {deel}, o firmo por la plataforma que prefieras.",
+    },
     partsInThisStep: "Piezas de este paso",
     via: "vía",
     visit: "Visitar {name}",
     theme: { toDark: "Activar modo oscuro", toLight: "Activar modo claro" },
     avatar: { showPhoto: "Mostrar mi foto", showBricks: "Mostrar la versión en bloques" },
-    partsInStep: "Piezas del paso {n}",
+    mainParts: "Piezas principales de todos los pasos",
     step: "Paso",
     client: "Cliente",
     years: ["año", "años"],

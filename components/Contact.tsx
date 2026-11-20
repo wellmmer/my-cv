@@ -1,4 +1,5 @@
 import { Brick } from "@/components/brick/Brick";
+import { ContractNote } from "@/components/ContractNote";
 import { BrickButton } from "@/components/brick/BrickButton";
 import { Icon } from "@/components/icons";
 import { BRICK_HEX, type Locale } from "@/content/types";
@@ -40,7 +41,9 @@ export function Contact({ locale }: { locale: Locale }) {
       </p>
       <p className={styles.note}>
           <Brick color={BRICK_HEX.red} U={11} />
-          <span>{t.contractNote}</span>
+          <span>
+            <ContractNote locale={locale} />
+          </span>
         </p>
     </section>
   );

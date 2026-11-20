@@ -1,3 +1,4 @@
+import { ContractNote } from "@/components/ContractNote";
 import { bulletKey, bulletParts, pdfBulletsOf } from "@/lib/bullets";
 import { Brick } from "@/components/brick/Brick";
 import { Tower } from "@/components/brick/Tower";
@@ -39,7 +40,9 @@ export function DesignedCv({ locale, privateSteps, today }: { locale: Locale; pr
       <section className={styles.block}>
         <h2>{t.atsSections.summary}</h2>
         <p>{cv.summary[locale]}</p>
-        <p className={styles.note}>{t.contractNote}</p>
+        <p className={styles.note}>
+          <ContractNote locale={locale} />
+        </p>
       </section>
 
       <section className={styles.block}>

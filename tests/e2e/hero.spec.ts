@@ -74,3 +74,43 @@ test("the current year brick is not clipped and has no outline", async ({ page }
   const l = (await last.boundingBox())!;
   expect(l.x + l.width).toBeLessThanOrEqual(s.x + s.width);
 });
+
+test("on a phone every year brick holds its number and year", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/en");
+  for (const a of await page.locator("[data-strip] a").all()) {
+    const fits = await a.evaluate((el) => {
+      const box = el.getBoundingClientRect();
+      return [...el.querySelectorAll("b, span")].every((c) => c.getBoundingClientRect().right <= box.right - 2);
+    });
+    expect(fits).toBe(true);
+  }
+});
+
+test("in dark mode the black year brick keeps a visible bottom band", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/en");
+  const a = page.locator('[data-strip] a[data-color="black"]').first();
+  const [band, pageBg] = await a.evaluate((el) => {
+    const toRgb = (c: string) => {
+      const ctx = document.createElement("canvas").getContext("2d")!;
+      ctx.fillStyle = c;
+      ctx.fillRect(0, 0, 1, 1);
+      return [...ctx.getImageData(0, 0, 1, 1).data.slice(0, 3)];
+    };
+    const f = Number(getComputedStyle(el).filter.match(/brightness\(([\d.]+)\)/)?.[1] ?? 1);
+    const band = toRgb(getComputedStyle(el).getPropertyValue("--band").trim()).map((v) => Math.min(255, v * f));
+    return [band, toRgb(getComputedStyle(document.body).backgroundColor)];
+  });
+  const diff = Math.max(...band.map((v, i) => Math.abs(v - pageBg[i])));
+  expect(diff).toBeGreaterThan(24);
+});
+
+test("the first screen shows the main parts of all steps with counts", async ({ page }) => {
+  await page.goto("/en");
+  const box = page.locator("#parts-now").locator("xpath=..");
+  await expect(page.locator("#parts-now")).toHaveText("Main parts of all steps");
+  await expect(box.locator("li")).toHaveCount(8);
+  await expect(box.locator("li").first()).toContainText("10x");
+  await expect(box.locator("li").first()).toContainText("JavaScript");
+});

@@ -26,7 +26,7 @@ export const cv: Cv = {
     {
       n: 1,
       id: "ipt",
-      company: "IPT, Instituto de Pesquisas Tecnológicas",
+      company: "IPT",
       short: "IPT",
       companyUrl: "https://ipt.br",
       role: { en: "Trainee Researcher", pt: "Pesquisador Trainee", es: "Investigador en Formación" },
@@ -157,17 +157,17 @@ export const cv: Cv = {
       bullets: {
         en: [
           "Designed the architecture of Tippou, a digital wallet for tips, and led a team of 4 developers.",
-          "Shipped the MVP to the App Store and Google Play in 4 months, July to November 2019.",
+          "Shipped the MVP to the App Store and Google Play in 4 months and grew to almost 1,000 users in under a year.",
           "Built payments by balance, card and QR code, with cashback, loyalty points, coupons and split bills.",
         ],
         pt: [
           "Projetei a arquitetura do Tippou, uma carteira digital para gorjetas, e liderei um time de 4 desenvolvedores.",
-          "Lancei o MVP na App Store e no Google Play em 4 meses, de julho a novembro de 2019.",
+          "Lancei o MVP na App Store e no Google Play em 4 meses, com quase mil usuários em menos de um ano.",
           "Desenvolvi pagamentos por saldo, cartão e QR code, com cashback, pontos de fidelidade, cupons e divisão de contas.",
         ],
         es: [
           "Diseñé la arquitectura de Tippou, una billetera digital para propinas, y lideré un equipo de 4 desarrolladores.",
-          "Lancé el MVP en App Store y Google Play en 4 meses, de julio a noviembre de 2019.",
+          "Lancé el MVP en App Store y Google Play en 4 meses, con casi mil usuarios en menos de un año.",
           "Desarrollé pagos con saldo, tarjeta y código QR, con cashback, puntos de fidelidad, cupones y división de cuentas.",
         ],
       },
@@ -355,7 +355,6 @@ export const cv: Cv = {
         "nodejs", "nestjs", "socketio", "postgresql", "redis", "aws", "sentry", "posthog",
         "ai-agents", "claude", "chatgpt",
       ],
-      keyParts: ["nextjs", "react", "nestjs", "postgresql", "aws", "typescript"],
     },
   ],
 
@@ -403,9 +402,9 @@ export const cv: Cv = {
       size: "md",
       status: "story",
       what: {
-        en: "A digital wallet for tips. MVP in both app stores in 4 months. Shut down during the COVID-19 pandemic.",
-        pt: "Uma carteira digital para gorjetas. MVP nas duas lojas de apps em 4 meses. Encerrada durante a pandemia de COVID-19.",
-        es: "Una billetera digital para propinas. MVP en las dos tiendas de apps en 4 meses. Cerró durante la pandemia de COVID-19.",
+        en: "A digital wallet for tips. MVP in both app stores in 4 months, and almost 1,000 users in under a year. Shut down during the COVID-19 pandemic.",
+        pt: "Uma carteira digital para gorjetas. MVP nas duas lojas de apps em 4 meses e quase mil usuários em menos de um ano. Encerrada durante a pandemia de COVID-19.",
+        es: "Una billetera digital para propinas. MVP en las dos tiendas de apps en 4 meses y casi mil usuarios en menos de un año. Cerró durante la pandemia de COVID-19.",
       },
       role: { en: "Co-founder and CTO.", pt: "Cofundador e CTO.", es: "Cofundador y CTO." },
       stack: ["React Native", "React", "Node.js", "MongoDB", "AWS", "Firebase"],
@@ -417,9 +416,9 @@ export const cv: Cv = {
       size: "sm",
       status: "story",
       what: {
-        en: "A word game for Porão Jovem.",
-        pt: "Um jogo de palavras para o Porão Jovem.",
-        es: "Un juego de palabras para Porão Jovem.",
+        en: "A word game for a youth group.",
+        pt: "Um jogo de palavras para um grupo de jovens.",
+        es: "Un juego de palabras para un grupo de jóvenes.",
       },
       role: { en: "Built it.", pt: "Desenvolvi.", es: "Lo desarrollé." },
       stack: [],

@@ -36,20 +36,17 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
                   </span>
                   <div>
                     <h3 className={styles.company}>
-                      {s.company}
-                      {s.product ? <span className={styles.product}> · {s.product}</span> : null}
-                      {s.companyUrl ? (
-                        <a
-                          className={styles.visit}
-                          href={s.companyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={t.visit.replace("{name}", s.company)}
-                          title={t.visit.replace("{name}", s.company)}
-                        >
-                          <Icon name="external" size={18} />
-                        </a>
-                      ) : null}
+                      {s.product ? (
+                        <>
+                          {s.company}
+                          <span className={styles.product}>
+                            {" "}
+                            · <NameTail text={s.product} url={s.companyUrl} label={t.visit.replace("{name}", s.company)} />
+                          </span>
+                        </>
+                      ) : (
+                        <NameTail text={s.company} url={s.companyUrl} label={t.visit.replace("{name}", s.company)} />
+                      )}
                     </h3>
                     <p className={styles.role}>{s.role[locale]}</p>
                     <p className={styles.meta}>
@@ -107,5 +104,22 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
       </div>
       <TowerMotion />
     </section>
+  );
+}
+
+/** The name with the visit link glued to its last word, so the icon never wraps onto a line alone. */
+function NameTail({ text, url, label }: { text: string; url?: string; label: string }) {
+  if (!url) return <>{text}</>;
+  const cut = text.lastIndexOf(" ") + 1;
+  return (
+    <>
+      {text.slice(0, cut)}
+      <span className={styles.glue}>
+        {text.slice(cut)}
+        <a className={styles.visit} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+          <Icon name="external" size={18} />
+        </a>
+      </span>
+    </>
   );
 }

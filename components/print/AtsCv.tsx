@@ -1,3 +1,4 @@
+import { ContractNote } from "@/components/ContractNote";
 import { bulletKey, bulletText, pdfBulletsOf } from "@/lib/bullets";
 import { cv } from "@/content/cv";
 import type { Locale, Step } from "@/content/types";
@@ -24,7 +25,9 @@ export function AtsCv({ locale, privateSteps, today }: { locale: Locale; private
 
       <h2>{t.atsSections.summary}</h2>
       <p>{cv.summary[locale]}</p>
-      <p>{t.contractNote}</p>
+      <p>
+        <ContractNote locale={locale} />
+      </p>
 
       <h2>{t.atsSections.experience}</h2>
       {m.experience.map((s) => (

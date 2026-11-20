@@ -7,6 +7,7 @@ export const CONTACT = {
   email: "wellmmer@gmail.com",
   linkedin: "https://www.linkedin.com/in/wellmmer",
   github: "https://github.com/wellmmer",
+  deel: "https://app.deel.com/profile/0f3e46c4-1d1d-418d-b6b0-58117e80dae0",
 } as const;
 
 export function whatsappUrl(locale: Locale): string {

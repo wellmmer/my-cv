@@ -1,14 +1,15 @@
 import { Avatar } from "@/components/Avatar";
 import { Brick } from "@/components/brick/Brick";
+import { ContractNote } from "@/components/ContractNote";
 import { BrickButton } from "@/components/brick/BrickButton";
 import { BrickCard } from "@/components/brick/BrickCard";
 import { Tower } from "@/components/brick/Tower";
 import { HeroMotion } from "@/components/HeroMotion";
 import { cv } from "@/content/cv";
-import { SKILLS } from "@/content/skills";
 import { BRICK_HEX, type BrickColor, type Locale } from "@/content/types";
 import { ui } from "@/content/ui";
 import { CONTACT, cvPdfPath, mailtoUrl, whatsappUrl } from "@/lib/contact";
+import { mainParts } from "@/lib/parts";
 import styles from "@/components/Hero.module.css";
 
 const PART_COLORS: BrickColor[] = ["red", "blue", "yellow", "black", "grey", "green"];
@@ -53,7 +54,9 @@ export function Hero({ locale }: { locale: Locale }) {
         </a>
         <p className={styles.note}>
           <Brick color={BRICK_HEX.red} U={11} />
-          <span>{t.contractNote}</span>
+          <span>
+            <ContractNote locale={locale} />
+          </span>
         </p>
       </div>
 
@@ -71,14 +74,14 @@ export function Hero({ locale }: { locale: Locale }) {
       </div>
 
       <BrickCard color="red" as="aside" className={styles.box} labelledBy="parts-now" studs={5}>
-        <h2 id="parts-now">{t.partsInStep.replace("{n}", String(newest.n))}</h2>
+        <h2 id="parts-now">{t.mainParts}</h2>
         <ul>
-          {(newest.keyParts ?? []).map((id, i) => (
-            <li key={id}>
+          {mainParts().map((p, i) => (
+            <li key={p.id}>
               <Brick color={BRICK_HEX[PART_COLORS[i % PART_COLORS.length]]} U={17} />
               <span>
-                <b>1x</b>
-                {SKILLS[id].label}
+                <b>{p.count}x</b>
+                {p.label}
               </span>
             </li>
           ))}
