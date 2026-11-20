@@ -9,9 +9,29 @@ export const runtime = "nodejs";
 
 const MAX_BODY = 1024;
 
+/** Reads at most MAX_BODY bytes; null when the body is larger, whatever the request claims. */
+async function readBounded(req: NextRequest): Promise<string | null> {
+  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY) return null;
+  if (!req.body) return "";
+  const reader = req.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > MAX_BODY) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks).toString("utf8");
+}
+
 async function readCode(req: NextRequest): Promise<string | null> {
-  const raw = await req.text();
-  if (!raw || raw.length > MAX_BODY) return null;
+  const raw = await readBounded(req);
+  if (!raw) return null;
   try {
     const code = (JSON.parse(raw) as { code?: unknown } | null)?.code;
     return typeof code === "string" && code.trim() ? code : null;

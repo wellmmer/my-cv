@@ -61,6 +61,26 @@ describe("private routes", () => {
     }
   });
 
+  it("rejects an oversized body by its declared length and by streaming", async () => {
+    const declared = new NextRequest(`${BASE}/api/private/unlock`, {
+      method: "POST",
+      body: JSON.stringify({ code: CODE }),
+      headers: { "content-type": "application/json", "content-length": "999999" },
+    });
+    expect((await unlockPost(declared)).status).toBe(400);
+    let pulled = 0;
+    const endless = new ReadableStream<Uint8Array>({
+      pull(c) {
+        pulled += 1;
+        if (pulled > 1000) return c.close();
+        c.enqueue(new Uint8Array(512).fill(97));
+      },
+    });
+    const streamed = new NextRequest(`${BASE}/api/private/unlock`, { method: "POST", body: endless, duplex: "half" } as unknown as ConstructorParameters<typeof NextRequest>[1]);
+    expect((await unlockPost(streamed)).status).toBe(400);
+    expect(pulled).toBeLessThan(10);
+  });
+
   it("sets a strict 30-day cookie for the right code", async () => {
     const res = await unlockPost(unlockReq(JSON.stringify({ code: CODE })));
     expect(res.status).toBe(204);
