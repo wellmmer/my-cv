@@ -7,7 +7,7 @@ import { BrickCard } from "@/components/brick/BrickCard";
 import { Tower } from "@/components/brick/Tower";
 import { HeroMotion } from "@/components/HeroMotion";
 import { cv } from "@/content/cv";
-import { BRICK_HEX, type BrickColor, type Locale } from "@/content/types";
+import { BRICK_HEX, type BrickColor, type Locale, type Step } from "@/content/types";
 import { ui } from "@/content/ui";
 import { CONTACT, mailtoUrl, whatsappUrl } from "@/lib/contact";
 import { mainParts } from "@/lib/parts";
@@ -15,17 +15,18 @@ import styles from "@/components/Hero.module.css";
 
 const PART_COLORS: BrickColor[] = ["red", "blue", "yellow", "black", "grey", "green"];
 
-export function Hero({ locale }: { locale: Locale }) {
+/** `steps` is the whole build: the public steps, plus the private ones for an unlocked browser. */
+export function Hero({ locale, steps, unlocked }: { locale: Locale; steps: readonly Step[]; unlocked: boolean }) {
   const t = ui[locale];
-  const newest = cv.steps[cv.steps.length - 1];
+  const newest = steps[steps.length - 1];
   // The title line already says it; the summary on the page starts after it.
   const lead = `${t.title}. `;
   const summary = cv.summary[locale].startsWith(lead) ? cv.summary[locale].slice(lead.length) : cv.summary[locale];
-  const towerSteps = cv.steps.map((s) => ({ n: s.n, color: BRICK_HEX[s.brick], label: s.short ?? s.company }));
+  const towerSteps = steps.map((s) => ({ n: s.n, color: BRICK_HEX[s.brick], label: s.short ?? s.company }));
   return (
     <section className={styles.hero} aria-labelledby="hero-name">
       <div className={styles.copy} data-hero-copy>
-        <Avatar labels={t.avatar} privateMode={t.privateMode} />
+        <Avatar labels={t.avatar} privateMode={t.privateMode} locale={locale} />
         <h1 id="hero-name" className={styles.name}>
           <span>Wellmmer</span> <span>Lucas</span>
         </h1>
@@ -34,7 +35,7 @@ export function Hero({ locale }: { locale: Locale }) {
         </p>
         <p className={styles.summary}>{summary}</p>
         <div className={styles.ctas}>
-          <CvLink locale={locale} kind="designed" variant="button">
+          <CvLink locale={locale} kind="designed" variant="button" unlocked={unlocked}>
             {t.cta.download}
           </CvLink>
           <BrickButton href={whatsappUrl(locale)} variant="whatsapp" icon="whatsapp" external>
@@ -50,7 +51,7 @@ export function Hero({ locale }: { locale: Locale }) {
             {t.cta.github}
           </BrickButton>
         </div>
-        <CvLink locale={locale} kind="ats" variant="plain" className={styles.plain}>
+        <CvLink locale={locale} kind="ats" variant="plain" className={styles.plain} unlocked={unlocked}>
           {t.cta.plainText}
         </CvLink>
         <p className={styles.note}>
@@ -77,7 +78,7 @@ export function Hero({ locale }: { locale: Locale }) {
       <BrickCard color="red" as="aside" className={styles.box} labelledBy="parts-now" studs={5}>
         <h2 id="parts-now">{t.mainParts}</h2>
         <ul>
-          {mainParts().map((p, i) => (
+          {mainParts(steps).map((p, i) => (
             <li key={p.id}>
               <Brick color={BRICK_HEX[PART_COLORS[i % PART_COLORS.length]]} U={17} />
               <span>
@@ -93,7 +94,7 @@ export function Hero({ locale }: { locale: Locale }) {
       </BrickCard>
 
       <ol className={styles.strip} data-strip>
-        {cv.steps.map((s) => (
+        {steps.map((s) => (
           <li key={s.n} className={s.n === newest.n ? styles.on : undefined}>
             <a
               href={`#step-${s.n}`}

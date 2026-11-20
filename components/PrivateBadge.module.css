@@ -1,9 +1,4 @@
-/* The private step drops onto the build when it arrives. */
-.item {
-  animation: snap 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-/* After an unlock the new step glows once, so the change is easy to spot. */
+/* A private step in the list. Right after an unlock it drops in and glows once, so the change is easy to spot. */
 .item {
   border-radius: 14px;
 }

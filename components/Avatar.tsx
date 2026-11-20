@@ -12,7 +12,15 @@ import styles from "@/components/Avatar.module.css";
  * The brick build of Wellmmer; press it to flip to his photo, press again to flip back.
  * Twenty quick presses open the secret code box.
  */
-export function Avatar({ labels, privateMode }: { labels: { showPhoto: string; showBricks: string }; privateMode: Ui["privateMode"] }) {
+export function Avatar({
+  labels,
+  privateMode,
+  locale,
+}: {
+  labels: { showPhoto: string; showBricks: string };
+  privateMode: Ui["privateMode"];
+  locale: string;
+}) {
   const [photo, setPhoto] = useState(false);
   const [boxOpen, setBoxOpen] = useState(false);
   const taps = useRef<Taps>({ count: 0, last: 0 });
@@ -41,7 +49,7 @@ export function Avatar({ labels, privateMode }: { labels: { showPhoto: string; s
           </span>
         </span>
       </button>
-      <UnlockDialog open={boxOpen} onClose={() => setBoxOpen(false)} labels={privateMode} />
+      <UnlockDialog open={boxOpen} onClose={() => setBoxOpen(false)} labels={privateMode} locale={locale} />
     </>
   );
 }

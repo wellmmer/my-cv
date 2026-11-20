@@ -1,15 +1,27 @@
-import { PrivateSteps } from "@/components/PrivateSteps";
+import { PrivateBadge } from "@/components/PrivateBadge";
+import { PrivateReveal } from "@/components/PrivateReveal";
 import { StepCard } from "@/components/StepCard";
 import { Tower } from "@/components/brick/Tower";
 import { TowerMotion } from "@/components/TowerMotion";
-import { cv } from "@/content/cv";
-import { BRICK_HEX, type Locale } from "@/content/types";
+import { BRICK_HEX, type Locale, type Step } from "@/content/types";
 import { ui } from "@/content/ui";
+import badge from "@/components/PrivateBadge.module.css";
 import styles from "@/components/Steps.module.css";
 
-export function Steps({ locale, today }: { locale: Locale; today: Date }) {
+/** `steps` is the whole build; `privateNs` marks the private steps an unlocked browser also gets. */
+export function Steps({
+  locale,
+  today,
+  steps,
+  privateNs = [],
+}: {
+  locale: Locale;
+  today: Date;
+  steps: readonly Step[];
+  privateNs?: readonly number[];
+}) {
   const t = ui[locale];
-  const tower = cv.steps.map((s) => ({
+  const tower = steps.map((s) => ({
     n: s.n,
     color: BRICK_HEX[s.brick],
     label: s.short ?? s.company,
@@ -30,14 +42,21 @@ export function Steps({ locale, today }: { locale: Locale; today: Date }) {
           />
         </div>
         <ol className={styles.list}>
-          {cv.steps.map((s) => (
-            <li key={s.n}>
-              <StepCard step={s} locale={locale} today={today} tower={tower} />
-            </li>
-          ))}
-          <PrivateSteps locale={locale} tower={tower} />
+          {steps.map((s) =>
+            privateNs.includes(s.n) ? (
+              <li key={s.n} className={badge.item} data-private-step={s.n}>
+                <PrivateBadge on={t.privateMode.on} lockLabel={t.privateMode.lock} />
+                <StepCard step={s} locale={locale} today={today} tower={tower} />
+              </li>
+            ) : (
+              <li key={s.n}>
+                <StepCard step={s} locale={locale} today={today} tower={tower} />
+              </li>
+            ),
+          )}
         </ol>
       </div>
+      {privateNs.length ? <PrivateReveal ns={[...privateNs]} /> : null}
       <TowerMotion />
     </section>
   );

@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { BrickCard } from "@/components/brick/BrickCard";
 import type { Ui } from "@/content/ui";
-import { unlock } from "@/lib/private/client";
+import { showPrivateBuild, unlock } from "@/lib/private/client";
 import styles from "@/components/UnlockDialog.module.css";
 
 /** The secret code box the avatar easter egg opens. */
@@ -11,10 +11,12 @@ export function UnlockDialog({
   open,
   onClose,
   labels,
+  locale,
 }: {
   open: boolean;
   onClose: () => void;
   labels: Ui["privateMode"];
+  locale: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -44,6 +46,8 @@ export function UnlockDialog({
     if (result === "ok") {
       if (input.current) input.current.value = "";
       onClose();
+      // The server builds the private page: reload into it, landing on the new step.
+      showPrivateBuild(locale);
     } else setMessage(result === "wrong" ? labels.wrong : labels.error);
   }
 

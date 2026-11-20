@@ -8,7 +8,7 @@ import { ui } from "@/content/ui";
 import { CONTACT, mailtoUrl, whatsappUrl } from "@/lib/contact";
 import styles from "@/components/Contact.module.css";
 
-export function Contact({ locale }: { locale: Locale }) {
+export function Contact({ locale, unlocked }: { locale: Locale; unlocked: boolean }) {
   const t = ui[locale];
   return (
     <section id="contact" className={styles.contact} aria-labelledby="contact-h">
@@ -26,7 +26,7 @@ export function Contact({ locale }: { locale: Locale }) {
         <BrickButton href={CONTACT.github} variant="github" icon="github" external>
           {t.cta.github}
         </BrickButton>
-        <CvLink locale={locale} kind="designed" variant="button">
+        <CvLink locale={locale} kind="designed" variant="button" unlocked={unlocked}>
           {t.cta.download}
         </CvLink>
       </div>

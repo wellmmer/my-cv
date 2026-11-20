@@ -1,4 +1,5 @@
 import { cv } from "@/content/cv";
+import type { Step } from "@/content/types";
 import { SKILLS } from "@/content/skills";
 import type { SkillId } from "@/content/skills";
 
@@ -6,10 +7,10 @@ import type { SkillId } from "@/content/skills";
 const MAIN: SkillId[] = ["javascript", "typescript", "react", "nodejs", "aws", "nextjs", "postgresql", "react-native"];
 
 /** Main parts of all steps, each with how many steps used it. */
-export function mainParts(): { id: SkillId; label: string; count: number }[] {
+export function mainParts(steps: readonly Step[] = cv.steps): { id: SkillId; label: string; count: number }[] {
   return MAIN.map((id) => ({
     id,
     label: SKILLS[id].label,
-    count: cv.steps.filter((s) => s.uses.includes(id)).length,
+    count: steps.filter((s) => s.uses.includes(id)).length,
   }));
 }

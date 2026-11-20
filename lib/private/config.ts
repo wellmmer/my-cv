@@ -1,4 +1,4 @@
-// Server-only: read by the /api/private/* route handlers, never by pages or components.
+// Server-only: read by the /api/private/* route handlers and the private build page (app/[locale]/unlocked).
 import "server-only";
 import { isStep } from "@/content/private";
 import type { Step } from "@/content/types";

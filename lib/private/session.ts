@@ -34,3 +34,8 @@ export function privateHeaders(): Record<string, string> {
 export function notFound(): Response {
   return new Response("Not found", { status: 404, headers: privateHeaders() });
 }
+
+/** The private steps for a cookie value: all of them for a valid token, none otherwise. */
+export function stepsForToken(token: string | undefined, cfg: PrivateConfig | null, now = Date.now()): PrivateConfig["steps"] {
+  return cfg && verifyToken(token, cfg.secret, cfg.v, now) ? cfg.steps : [];
+}

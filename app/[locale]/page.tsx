@@ -1,28 +1,10 @@
 import { notFound } from "next/navigation";
-import { Appendix } from "@/components/Appendix";
-import { Builds } from "@/components/Builds";
-import { Contact } from "@/components/Contact";
-import { Hero } from "@/components/Hero";
-import { Parts } from "@/components/Parts";
-import { Steps } from "@/components/Steps";
-import { TopBar } from "@/components/TopBar";
+import { HomePage } from "@/components/HomePage";
 import { isLocale } from "@/lib/locale";
 
+/** The public page, built once at deploy time. Unlocked browsers are routed to ./unlocked instead (see proxy.ts). */
 export default async function Home({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const today = new Date();
-  return (
-    <>
-      <TopBar locale={locale} />
-      <main id="main">
-        <Hero locale={locale} />
-        <Steps locale={locale} today={today} />
-        <Builds locale={locale} />
-        <Parts locale={locale} today={today} />
-        <Appendix locale={locale} />
-        <Contact locale={locale} />
-      </main>
-    </>
-  );
+  return <HomePage locale={locale} today={new Date()} />;
 }

@@ -166,3 +166,40 @@ test.describe("private link", () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   });
 });
+
+test.describe("private build everywhere", () => {
+  const jsCount = (page: Page) =>
+    page.locator("#parts-now ~ ul li", { hasText: "JavaScript" }).locator("b").innerText();
+
+  test("unlocked: step 11 is in the hero tower, the parts box, the year strip and the Steps tower", async ({ page }) => {
+    await unlock(page);
+    const res = await page.goto("/en");
+    expect(res!.headers()["cache-control"]).toMatch(/no-store/);
+    await expect(page.locator('[data-hero-build] g[data-step="11"]')).toHaveCount(1);
+    await expect(page.locator('[data-tower="sticky"] g[data-step="11"]')).toHaveCount(1);
+    await expect(page.locator('[data-strip] a[href="#step-11"]')).toHaveAttribute("aria-current", "step");
+    expect(await jsCount(page)).toBe("11x");
+    await expect(page.locator("#step-11")).toContainText("Acme Test Co");
+    // The private step is in the server HTML, not fetched afterwards.
+    expect(await res!.text()).toContain("Acme Test Co");
+  });
+
+  test("locked: the same places stay at 10 and the HTML has no private step", async ({ page }) => {
+    const res = await page.goto("/en");
+    expect(await res!.text()).not.toContain("Acme Test Co");
+    await expect(page.locator('[data-hero-build] g[data-step="11"]')).toHaveCount(0);
+    await expect(page.locator('[data-strip] a[href="#step-10"]')).toHaveAttribute("aria-current", "step");
+    expect(await jsCount(page)).toBe("10x");
+  });
+
+  test("a bad cookie gets the public page", async ({ request }) => {
+    const res = await request.get("/en", { headers: { cookie: "__Host-cv_private=forged.token" } });
+    expect(res.status()).toBe(200);
+    expect(await res.text()).not.toContain("Acme Test Co");
+  });
+
+  test("the inner route never shows private steps without the cookie", async ({ page }) => {
+    const res = await page.goto("/en/unlocked");
+    expect(await res!.text()).not.toContain("Acme Test Co");
+  });
+});

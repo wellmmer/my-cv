@@ -1,67 +1,31 @@
 "use client";
 
-// Browser-side private-mode state. Asks the server once whether this browser is unlocked;
-// the page stays the public site until the server says yes.
-import { useSyncExternalStore } from "react";
+// Browser-side private-mode actions. The page itself is built on the server: an unlocked browser
+// gets the whole private build (towers, counts, steps, downloads) in the HTML. This file only
+// unlocks, locks, and remembers which private steps the unlock opened.
 import type { Step } from "@/content/types";
 
-export interface PrivateState {
-  status: "unknown" | "locked" | "on";
-  steps: Step[];
-}
+/** Private step numbers, known after a successful unlock. */
+let opened: number[] = [];
 
-const INITIAL: PrivateState = { status: "unknown", steps: [] };
-let state: PrivateState = INITIAL;
-let started = false;
-let reveal = false;
-const listeners = new Set<() => void>();
-
-function set(next: PrivateState) {
-  state = next;
-  for (const l of listeners) l();
-}
-
-async function load(): Promise<void> {
+/** Asks the server which private steps this browser may see; true when at least one. */
+async function check(): Promise<boolean> {
   try {
     const res = await fetch("/api/private/step", { cache: "no-store", credentials: "same-origin" });
     if (!res.ok) {
       // Drain the small 404 body so the request completes instead of hanging open.
       await res.text().catch(() => "");
-      return set({ status: "locked", steps: [] });
+      return false;
     }
-    const data = (await res.json()) as { steps?: Step[] };
-    set(Array.isArray(data.steps) && data.steps.length ? { status: "on", steps: data.steps } : { status: "locked", steps: [] });
+    const data = (await res.json()) as { steps?: Pick<Step, "n">[] };
+    opened = Array.isArray(data.steps) ? data.steps.map((s) => s.n).sort((a, b) => a - b) : [];
+    return opened.length > 0;
   } catch {
-    set({ status: "locked", steps: [] });
+    return false;
   }
 }
 
-function subscribe(l: () => void) {
-  listeners.add(l);
-  if (!started) {
-    started = true;
-    void load();
-  }
-  return () => listeners.delete(l);
-}
-
-export function usePrivateMode(): PrivateState {
-  return useSyncExternalStore(subscribe, () => state, () => INITIAL);
-}
-
-/** The current state, outside React (the link page reads the step number after unlocking). */
-export function privateSnapshot(): PrivateState {
-  return state;
-}
-
-/** True once after a code was just accepted, so the page can go to the new step. */
-export function takeReveal(): boolean {
-  const r = reveal;
-  reveal = false;
-  return r;
-}
-
-/** Sends the code; on success loads the private steps. "ok" only when private mode is really on. */
+/** Sends the code. "ok" only when private mode is really on (the cookie stuck and the steps load). */
 export async function unlock(code: string): Promise<"ok" | "wrong" | "error"> {
   try {
     const res = await fetch("/api/private/unlock", {
@@ -70,18 +34,30 @@ export async function unlock(code: string): Promise<"ok" | "wrong" | "error"> {
       body: JSON.stringify({ code }),
       credentials: "same-origin",
     });
-    if (res.status === 204) {
-      // Set before loading: the step renders as soon as the load lands, and reads this flag then.
-      reveal = true;
-      await load();
-      if (state.status !== "on") reveal = false;
-      // The cookie may not have stuck (e.g. blocked); only report success when the step really loaded.
-      return state.status === "on" ? "ok" : "error";
-    }
+    if (res.status === 204) return (await check()) ? "ok" : "error";
     return res.status === 401 || res.status === 400 ? "wrong" : "error";
   } catch {
     return "error";
   }
+}
+
+/** The first private step the last unlock opened, or null. */
+export function firstPrivateStep(): number | null {
+  return opened[0] ?? null;
+}
+
+/** Where to land after unlocking: the page, at the first private step (the reveal reads the hash). */
+export function privateBuildUrl(locale: string): string {
+  const n = firstPrivateStep();
+  return n === null ? `/${locale}` : `/${locale}#step-${n}`;
+}
+
+/** Reloads this page as the private build, landing on the new step. */
+export function showPrivateBuild(locale: string): void {
+  const url = privateBuildUrl(locale);
+  // Same path, new hash: replace the entry, then reload so the server sends the private build.
+  window.history.replaceState(null, "", url);
+  window.location.reload();
 }
 
 /** Clears the cookie and reloads the public page. */

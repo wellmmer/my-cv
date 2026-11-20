@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { BrickCard } from "@/components/brick/BrickCard";
 import type { Locale } from "@/content/types";
 import type { Ui } from "@/content/ui";
-import { privateSnapshot, unlock } from "@/lib/private/client";
+import { firstPrivateStep, privateBuildUrl, unlock } from "@/lib/private/client";
 import styles from "@/components/PrivateLink.module.css";
 
 /**
@@ -28,8 +28,7 @@ export function PrivateLink({ locale, labels }: { locale: Locale; labels: Ui["pr
     // No code is the same as a wrong one; both answer asynchronously, so the effect never sets state itself.
     const check = code.trim() ? unlock(code) : Promise.resolve("wrong" as const);
     void check.then((result) => {
-      const first = privateSnapshot().steps.map((s) => s.n).sort((a, b) => a - b)[0];
-      if (result === "ok" && first) window.location.replace(`/${locale}#step-${first}`);
+      if (result === "ok" && firstPrivateStep() !== null) window.location.replace(privateBuildUrl(locale));
       else setState(result === "error" ? "error" : "bad");
     });
   }, [locale]);
